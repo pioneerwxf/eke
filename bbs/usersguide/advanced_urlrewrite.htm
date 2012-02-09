@@ -1,0 +1,179 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Discuz! 用户使用说明书 - 高级应用</title><link rel="stylesheet" href="discuz_guide.css">
+<base target="_blank">
+</head>
+
+<body leftmargin="0" rightmargin="0" topmargin="0">
+<script language="JavaScript" src="header.js"></script>
+
+<table width="100%" cellpadding="0" cellspacing="0" border="0">
+
+<tr><td class="title">本栏目下相关链接</td></tr>
+<tr><td><br /><ul><script language="JavaScript" src="advanced.js"></script></ul><br /></td></tr>
+
+<tr><td class="title">Discuz! URL 静态化的使用<a name="title"></a></td></tr>
+<tr><td><br />
+<p>Discuz! 4.1.0 新增了 Discuz! URL 静态化（以下简称 URL 静态化）功能。此功能可以将 Discuz! Archiver 及部分常用页面(如
+forumdisplay.php、viewthread.php、viewpro.php 等)进行 URL 静态化转换，形成类似 http://www.demo.net/discuz/forum-1-1.html 形式的超级链接，
+从而使论坛内容更容易被搜索引擎挖掘，提高被收录的机率。
+
+<p class="subtitle">使用注意事项
+<ul>
+<li>您可以通过 系统设置 中 Discuz! 选项 来控制 URL 静态化 的打开或关闭及其工作状态
+<li>本功能对服务器环境有特殊要求，独立主机用户需要对 Web 服务器增加相应的 Rewrite 规则，因此需要服务器权限才可使用。对于虚拟主机用户，您需要向您的空间服务商进行咨询：
+空间是否支持 Rewrite 以及是否支持对站点目录中 .htaccess 的文件解析，只有满足这两条件，URL 静态化 功能才会生效。
+<li>打开 URL 静态化 后，论坛一些常用链接会变成类似 http://www.demo.net/discuz/forum-1-1.html 形式，如果您的服务器环境不支持或者尚未配置好，访问
+这些链接会出现“网页无法显示”的错误信息，论坛将无法正常访问。发生无法访问的现象时，请您进入管理后台，关闭 URL 静态化 功能，论坛即可恢复正常状态。
+</ul>
+
+<p class="subtitle">URL 静态化 工作状态<ul>
+<p>在 Discuz! 选项 中提供了四种 URL 静态化 的工作状态，分别是：
+<ul type="1">
+<p><li><b>无</b>
+<br />不启用 URL 静态化 功能。
+
+<p><li><b>Discuz! Archiver 静态化</b>
+<br />当论坛启用 Archiver 功能时，Archiver 内的所有链接均采用 *.html 形式。
+
+<p><li><b>普通页面静态化</b>
+<br />对论坛常用页面(如 forumdisplay.php、viewthread.php、viewpro.php、space.php 等)进行 URL 静态化转换。
+
+<p><li><b>Archiver 和普通页面均静态化</b>
+<br />对 Archiver 以及论坛常用页面(如 forumdisplay.php、viewthread.php、viewpro.php、space.php 等)进行 URL 静态化转换。
+</ul>
+</ul>
+
+<br /></td></tr><tr><td class="title">Discuz! URL 静态化 服务器环境的设置</td></tr>
+<tr><td><br />
+<p>Discuz! URL 静态化 功能受到论坛所在服务器环境的制约，在开启此功能之前，请根据你的 Web 服务器环境，选择相应的环境配置方法。
+错误的设置有可能造成服务器无法启动或者功能无效。以下仅提供 Apache 和 Zeus 的配置方法，IIS 或其他 Web 服务器
+您可根据原理自行修改。
+
+<p class="subtitle">Apache Web Server（独立主机用户）<ul>
+<p>首先确定您使用的 Apache 版本，及是否加载了 mod_rewrite 模块。
+<p>Apache 1.x 的用户请检查 conf/httpd.conf 中是否存在如下两段代码：
+
+<br /><br /><div class="code"><pre>
+
+	LoadModule rewrite_module     libexec/mod_rewrite.so
+</pre></div>
+
+<br /><br /><div class="code"><pre>
+
+	AddModule mod_rewrite.c
+</pre></div>
+
+<p>Apache 2.x 的用户请检查 conf/httpd.conf 中是否存在如下一段代码：
+<br /><br /><div class="code"><pre>
+
+	LoadModule rewrite_module     modules/mod_rewrite.so
+</pre></div>
+
+<p>如果存在，那么在配置文件（通常就是 conf/httpd.conf）中加入如下代码。此时请务必注意，如果网站使用通过虚拟主机来定义，请务必
+加到虚拟主机配置，即 &lt;VirtualHost&gt; 中去，如果加在虚拟主机配置外部将可能无法使用。改好后然后将 Apache 重启。
+
+<br /><br /><div class="code">
+<pre>
+
+	&lt;IfModule mod_rewrite.c&gt;
+		RewriteEngine On
+		RewriteRule ^(.*)/archiver/((fid|tid)-[\w\-]+\.html)$ $1/archiver/index.php?$2
+		RewriteRule ^(.*)/forum-([0-9]+)-([0-9]+)\.html$ $1/forumdisplay.php?fid=$2&page=$3
+		RewriteRule ^(.*)/thread-([0-9]+)-([0-9]+)-([0-9]+)\.html$ $1/viewthread.php?tid=$2&extra=page\%3D$4&page=$3
+		RewriteRule ^(.*)/space-(username|uid)-(.+)\.html$ $1/space.php?$2=$3
+		RewriteRule ^(.*)/tag-(.+)\.html$ $1/tag.php?name=$2
+	&lt;/IfModule&gt;
+</pre></div>
+
+<p>如果没有安装 mod_rewrite，您可以重新编译 Apache，并在原有 configure 的内容中加入 --enable-rewrite=shared，然后再在 Apache
+配置文件中加入上述代码即可。</ul>
+
+<p class="subtitle">Apache Web Server（虚拟主机用户）<ul>
+<p>在开始以下设置之前，请首先咨询您的空间服务商，空间是否支持 Rewrite 以及是否支持对站点目录中 .htaccess 的文件解析，否则即便按照下面的方法设置好了，
+也无法使用。
+<p>检查论坛所在目录中是否存在 .htaccess 文件，如果不存在，请手工建立此文件。Win32 系统下，无法直接建立 .htaccess 文件，您可以从其他系统中拷贝一份，
+或者在 Discuz.net 技术支持栏目中下载此文件。编辑并修改 .htaccess 文件，添加以下内容
+
+<br /><br /><div class="code">
+<pre>
+
+	# 将 RewriteEngine 模式打开
+	RewriteEngine On
+
+	# 修改以下语句中的 /discuz 为你的论坛目录地址，如果程序放在根目录中，请将 /discuz 修改为 /
+	RewriteBase /discuz
+
+	# Rewrite 系统规则请勿修改
+	RewriteRule ^archiver/((fid|tid)-[\w\-]+\.html)$ archiver/index.php?$1
+	RewriteRule ^forum-([0-9]+)-([0-9]+)\.html$ forumdisplay.php?fid=$1&page=$2
+	RewriteRule ^thread-([0-9]+)-([0-9]+)-([0-9]+)\.html$ viewthread.php?tid=$1&extra=page\%3D$3&page=$2
+	RewriteRule ^space-(username|uid)-(.+)\.html$ space.php?$1=$2
+	RewriteRule ^tag-(.+)\.html$ tag.php?name=$1
+
+</pre></div>
+
+<p>添加内容时，请遵照上面的提示，修改论坛所在的路径，然后保存。将 .htaccess 文件上传到论坛所在的目录中。然后进入论坛系统设置的搜索引擎优化，根据需要开启 URL 静态化功能。
+</ul>
+<p class="subtitle">IIS Web Server（独立主机用户）<ul>
+<p>首先在 IIS 的 Isapi 上添加这个筛选器，筛选器名称为 Rewrite ，可执行文件选择 Rewrite.dll ，重新启动 IIS。附件中 httpd.ini 已经设置好，其中内容如下：
+<br /><br /><div class="code">
+<pre>
+
+	[ISAPI_Rewrite]
+
+	# 3600 = 1 hour
+	CacheClockRate 3600
+
+	RepeatLimit 32
+
+	# Protect httpd.ini and httpd.parse.errors files
+	# from accessing through HTTP
+	RewriteRule ^(.*)/archiver/((fid|tid)-[\w\-]+\.html)\?*(.*)$ $1/archiver/index\.php\?$2&$4
+	RewriteRule ^(.*)/forum-([0-9]+)-([0-9]+)\.html\?*(.*)$ $1/forumdisplay\.php\?fid=$2&page=$3&$4
+	RewriteRule ^(.*)/thread-([0-9]+)-([0-9]+)-([0-9]+)\.html\?*(.*)$ $1/viewthread\.php\?tid=$2&extra=page\%3D$4&page=$3&$4
+	RewriteRule ^(.*)/space-(username|uid)-(.+)\.html\?*(.*)$ $1/space\.php\?$2=$3&$4
+	RewriteRule ^(.*)/tag-(.+)\.html\?*(.*)$ $1/tag\.php\?name=$2&$3
+
+</pre></div>
+
+<p>然后进入论坛系统设置的搜索引擎优化，根据需要开启 URL 静态化功能。
+<p>附件下载地址：<a href="http://www.discuz.net/attachment.php?aid=124274" target="_blank">http://www.discuz.net/attachment.php?aid=124274</a>
+
+</ul><p class="subtitle">Zeus Web Server<ul>
+<p>在虚拟主机配置中找到 Request Rewriting，在 Rewrite Script 中写入以下内容，然后 Apply changes 并 make it
+take effect。
+
+<br /><br /><div class="code">
+<pre>
+
+	match URL into $ with ^(.*)/archiver/((fid|tid)-[\w\-]+\.html)?*(.*)$
+	if matched then
+		set URL = $1/archiver/index.php?$2&$4
+	endif
+	match URL into $ with ^(.*)/forum-([0-9]+)-([0-9]+)\.html?*(.*)$
+	if matched then
+		set URL = $1/forumdisplay.php?fid=$2&page=$3&$4
+	endif
+	match URL into $ with ^(.*)/thread-([0-9]+)-([0-9]+)-([0-9]+)\.html?*(.*)$
+	if matched then
+		set URL = $1/viewthread.php?tid=$2&extra=page\%3D$4&page=$3&$4
+	endif
+	match URL into $ with ^(.*)/space-(username|uid)-(.+?)\.html?*(.*)$
+	if matched then
+		set URL = $1/space.php?$2=$3&$4
+	endif
+	match URL into $ with ^(.*)/tag-(.+?)\.html?*(.*)$
+	if matched then
+		set URL = $1/tag.php?name=$2$3
+	endif
+
+</pre></div>
+
+<p>修改完服务器配置后请进入论坛 系统设置，打开 URL 静态化 功能，测试功能是否正常。如果出现问题，请仔细检查你所做的每一步。
+</ul></td></tr></table>
+
+<script language="JavaScript" src="footer.js"></script>
+</body>
+</html>

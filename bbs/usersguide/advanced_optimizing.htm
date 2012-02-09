@@ -1,0 +1,63 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Discuz! 用户使用说明书 - 高级应用</title><link rel="stylesheet" href="discuz_guide.css">
+<base target="_blank">
+</head>
+
+<body leftmargin="0" rightmargin="0" topmargin="0">
+<script language="JavaScript" src="header.js"></script>
+
+<table width="100%" cellpadding="0" cellspacing="0" border="0">
+
+<tr><td class="title">本栏目下相关链接</td></tr>
+<tr><td><br /><ul><script language="JavaScript" src="advanced.js"></script></ul><br /></td></tr>
+
+<tr><td class="title">Discuz! 优化傻瓜教程<a name="title"></a></td></tr>
+<tr><td><br />
+<p class="subtitle">论坛自身优化<ul>
+<p>很多朋友想象中，对整个论坛系统的效率、负载能力进行优化是很高深的技术。事实上，您仅通过对 Discuz! 自身系统设置合理的配置，
+就可以实现对速度卓有成效的优化。
+
+<p>由于 Discuz! 是使用数据库的应用程序，因此数据库的大小，具体说也就是帖子数目，会员数目等，都直接影响到各项检索的速度。我们
+尽最大可能保证整个论坛的速度不因为数据库尺寸的增加而降低，你论坛的帖子在 300 万以内，会员数目在 15 万以内，基本都不会感到速度
+变慢的情况。我们建议您的帖子数目保持在 500 万以内，会员数目保持在 30 万以内，以使得论坛处于较好的运行状态。
+
+<p>除去帖子和在线人数的因素，您可以尝试从以下几个方面入手优化 Discuz! 的速度：
+<p><ul>
+<li>在 系统设置 的 Discuz! 选项 中，打开 页面 Gzip 压缩，在支持 Gzip 压缩的 PHP 系统上可以提高页面打开速度数倍
+<li>请打开 基本设置--> Discuz! 选项--> 服务器优化中的 点击数批量更新 功能，这将明显提高系统的负载能力
+<li>请打开 基本设置--> Discuz! 选项--> 页面缓存设置中的 页面缓存 功能，详情请见《页面缓存使用》，这将明显提高系统的负载能力
+<li>如果您常年不更新模板，可将 config。php 中 $tplrefresh 的值置 0 或调大（最大为 9）。这是个专家参数，关系到模板更新的时间
+检查，如果您不完全了解原理，切勿盲从！！！
+<li>定期（如每个月）优化数据表
+<li>选择装有 Zend Performance Suite 的空间商，Zend Performance Suite 是商业软件，由于 Discuz! 是代码与数据库并重的论坛产品，
+该软件可以极为显著的提高 Discuz! 的运行效率。
+</ul>
+
+<p>下面列出几个可能会影响 Discuz! 效率的功能，如果不必要，您可以在系统设置中减小设置值或将其关闭：
+<p><ul>
+<li>论坛统计功能
+<li>帖子列表显示加点的图标
+<li>过多的（超过初始安装默认数目的 3 倍以上）Smilies 或词语过滤
+<li>过多的（超过初始安装默认数目的 1.5 倍以上）每页显示主题数、帖子数和会员数
+</ul>
+
+<p>注意：鉴于 Discuz! 特别设计的体系结构，可能会和其他论坛产品有所不同。没有列出来的其他功能，我们都认为打开与关闭不会对程序
+效率产生大的影响，您可放心的使用。
+
+</ul><p class="subtitle">系统优化<ul>
+<p>对于 MySQL 版本，系统优化主要集中在对 PHP 和 MySQL 的优化上，其中 MySQL 的优化在《<a href="advanced_mysql.htm">MySQL 使用、
+优化与故障处理</a>》中有详细的介绍。而 PHP 作为一种语言环境，主要是在安装方式上的不同，导致了资源消耗上的不同。
+
+<p>我们建议，对于 Windows 用户，请不要使用 Apache for Windows 作为 web 服务器，而使用微软自带的 IIS。同时，一定不要将 PHP 
+安装为 CGI 模式（即调用 php.exe 来解析程序），而要将 PHP 安装为 isapi 模式（即调用 php4isapi.dll 来解析程序）。对于 Unix 类
+用户，使用 Apache+php_apache_module 的方式就可以得到较好的效率。但由于 Apache 自身设计原因，如果您的并发访问数很大，Apache 
+进程本身就会消耗掉很多的内存，此时可能对数据库的正常缓存造成影响。您也可以考虑换用 Zeus+php_fastcgi 的架构，以获得更高的负载
+能力。
+
+</ul></td></tr></table>
+
+<script language="JavaScript" src="footer.js"></script>
+</body>
+</html>

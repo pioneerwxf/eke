@@ -1,0 +1,77 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Discuz! 用户使用说明书 - 安装指南</title><link rel="stylesheet" href="discuz_guide.css">
+<base target="_blank">
+</head>
+
+<body leftmargin="0" rightmargin="0" topmargin="0">
+<script language="JavaScript" src="header.js"></script>
+
+<table width="100%" cellpadding="0" cellspacing="0" border="0">
+
+<tr><td class="title">本栏目下相关链接</td></tr>
+<tr><td><br /><ul><script language="JavaScript" src="install.js"></script></ul><br /></td></tr>
+
+<tr><td class="title">安装常见问题</td></tr>
+<tr><td><br />
+
+<p class="subtitle">什么是二进制（BINARY）上传？如何设置并使用二进制上传？<ul>
+<p>所有的 FTP 服务器端和客户端软件均支持两种方式的文件上传，其一为文本（ASCII）上传，其二为二进制（BINARY）上传。Discuz! 要求
+用户在上传 PHP 程序文件时，使用二进制的上传方式进行。原因为某些程序文件经过编译处理，使用一般的文本上传会造成文件传输错误，
+影响您的使用。您可以在所有的 FTP 客户端软件中找到有关二进制上传的选项，例如 <a href="http://www.leapware.com">LeapFTP</a>，
+<a href="http://www.globalscape.com">CuteFTP</a> 等。以下举例说明这两种客户端软件设置 PHP 文件二进制上传的方法。
+
+<p><ul>
+<li><a href="http://www.leapware.com/">LeapFTP</a>：在 Options（选项）菜单中选择 Parameters（参数设置），选择其中的[ASCII 
+扩展名]，出现列表后，选中其中的“*.PHP”，点右边的[删除]，再点右边的[确定]即可。如果“*.PHP”项目不存在的话，可直接使用，
+不需另行设置。
+<li><a href="http://www.globalscape.com">CuteFTP</a>：进入软件后按 ALT+F7 进入 Global Options（全局选项），选择[传输]下面
+的[ASCII 类型]，在右边列表框中找到名为“PHP”的项目，选定后点右边的[删除]，再点下面的[确定]即可。如果“PHP”项目不存在的话，
+可直接使用，不需另行设置。
+</ul>
+
+</ul><p class="subtitle">如何更改文件属性？<ul>
+<p>您只有在服务器使用 Linux/Unix 类操作系统时，才需要在安装时对文件属性进行更改，Windows 系统的服务器不需要更改属性。您可以
+在 FTP 软件中，选定需要更改属性的文件或目录，然后点右键选择 CHMOD（更改文件属性），输入属性值（如 777），再确定即可。如果您的 
+FTP 软件提示无权更改属性，而您又没有办法通过 Shell 的方式登入主机，请与空间服务商联系，要求其授予您 CHMOD 的权限。
+
+</ul><p class="subtitle">为什么通过访问所有 .php 页面都会出现类似程序代码一样的信息？<ul>
+<p>这种情况是因为您的服务器上 PHP 语言支持环境没有被安装，或配置不正确。请自行安装，或向空间提供商寻求解决。
+
+</ul><p class="subtitle">为什么软件提示 Unable to read xxx bytes in xxx.php in xx 这样的信息？<ul>
+<p>因为您没有使用二进制（BINARY）上传 PHP 文件，请使用 FTP 软件将所有 PHP 文件重新传输一次。
+
+</ul><p class="subtitle">为什么论坛提示 Caches successfully created, please refresh？<ul>
+<p>这是缓存自动更新的提示信息，通常在初次安装完成后，或缓存文件不存在由系统自动重新建立的时候出现。这个提示为正常现象，一般
+仅出现一次，刷新该页面即可。
+
+</ul><p class="subtitle">为什么论坛提示 Can not write to cache files, please check directory ./forumdata/ and ./forumdata/cache/ .？<ul>
+<p>出现这个提示通常因为 Cache 文件无法写入。使用 Unix 类操作系统的用户，请检查 ./forumdata/、./forumdata/cache/ 和 
+./forumdata/templates/ 这三个目录是否设置了可写属性（777），同时如果您是从其他服务器上转移论坛而来，除了需要对上述文件设置属性
+以外，还需要进行下面两个步骤其中之一：
+<ul>
+<li>将上述三个目录中的后两个目录中的所有文件全部删除
+<li>将上述三个目录中下的所有文件及目录属性均设置为777
+</ul>
+
+</ul><p class="subtitle">如果数据库不存在，安装程序可以自动建立数据库吗？<ul>
+<p>Discuz! 安装程序提供这个功能，前提是您的账号要有建库的权限才行，否则只能使用已有的数据库。
+
+</ul><p class="subtitle">一般情况下，我需要修改 config.inc.php 中的什么设置？<ul>
+<p>一般应用只要修改 $dbname，$dbuser，$dbpw，$dbhost，$adminemail 这五个变量，而其他保留默认或等待对论坛软件更加熟悉以后再
+进行修改。上面这五个变量，除了 $adminemail 外，其他均用于连接数据库，在您服务器空间的说明中都会给出，如果其中之一配置不正确
+就会出现数据库无法连接的错误提示而无法使用 Discuz! 论坛。如果您对此不了解，请咨询您的空间服务商，如何设置这四个变量参数。
+
+</ul><p class="subtitle">安装后论坛提示 Access denied for user@localhost using password YES'，该如何解决？<ul>
+<p>这个提示意味着您的数据库连接参数设置的不正确，有两种可能：其一为数据库账号或密码错误。其二为数据库账号和密码均正确，但无权
+访问指定的数据库。遇到此种情况，请您咨询您的空间服务商，针对您的空间该如何配置数据库连接参数。
+
+</ul><p class="subtitle">为什么安装成功，进入系统设置后提示 Please delete install.php via FTP？<ul>
+<p>因为您没有按照说明将 install.php 删除，会产生安全问题，使用 FTP 软件将其删除后这个提示自动消失。
+
+</td></tr></table>
+
+<script language="JavaScript" src="footer.js"></script>
+</body>
+</html>

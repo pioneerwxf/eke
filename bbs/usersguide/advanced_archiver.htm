@@ -1,0 +1,73 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Discuz! 用户使用说明书 - 高级应用</title><link rel="stylesheet" href="discuz_guide.css">
+<base target="_blank">
+</head>
+
+<body leftmargin="0" rightmargin="0" topmargin="0">
+<script language="JavaScript" src="header.js"></script>
+
+<table width="100%" cellpadding="0" cellspacing="0" border="0">
+
+<tr><td class="title">本栏目下相关链接</td></tr>
+<tr><td><br /><ul><script language="JavaScript" src="advanced.js"></script></ul><br /></td></tr>
+
+<tr><td class="title">Discuz! Archiver 使用说明<a name="title"></a></td></tr>
+<tr><td><br />
+<p>Discuz! 4.0.0 开始新增了 Discuz! Archiver（以下简称 Archiver）功能。Discuz! Archiver 是一个纯文字版的论坛内容浏览工具，我们
+知道，通常的搜索引擎蜘蛛程序对动态页面的挖掘是有深度限制的，因而动态页面被搜索引擎收录的范围可能会较小；反之静态页面（通常以
+.html 或 .htm 结尾）则很容易被搜索引擎全盘收录。然而，论坛是一种内容经常更新的互动式 Web 应用系统，通过真实的静态页面来体现其中
+内容是毫无意义和价值的，所以在新版本 Discuz! 中我们提供了 Archiver 工具，它可以将论坛帖子等内容伪装成静态页面的形式（例如
+http://www.your.com/discuz/archiver/?fid-1.html 或 http://www.your.com/discuz/archiver/fid-1.html 的形式），从而使论坛的内容更
+容易被搜索引擎挖掘，提高被收录的机率。同时，如果您使用 PDA 上网，Archiver 也比普通论坛页面更具有可读性。
+
+<p class="subtitle">使用注意事项
+<ul>
+<li>您可以通过 系统设置 中 Discuz! 选项 来控制 Discuz! Archiver 的打开或关闭及其工作状态
+<li>本功能要求您的 Web 服务器必须设置了以 index.php 作为索引文件，否则将不能正常使用（这种情况发生的较少，因为把 index.php 加入
+到目录索引通常是一种惯例）。
+<li>打开 Archiver 后，将在默认模板的底部右侧显示一个“Discuz! Archiver”的链接，用于被搜索引擎挖掘
+<li>PDA 用户可直接通过 http://www.your.com/discuz/archiver/ 访问 Archiver 页面
+<li>Archiver 中显示的内容，均是以游客身份有权限访问到的内容，因此不必担心秘密资料泄漏的问题
+</ul>
+
+<p class="subtitle">Archiver 工作状态<ul>
+<p>在 Discuz! 选项 中提供了四种 Archiver 的工作状态，分别是：
+<ul type="1">
+<p><li><b>关闭</b>
+<br />不启用 Archiver 功能。
+
+<p><li><b>完全启用</b>
+<br />启用 Archiver，无论如何用户或搜索引擎机器人均可访问或检索到 Archiver 的内容。
+
+<p><li><b>启用，但当用户从搜索引擎点击时自动转向动态页面</b>
+<br />部分启用 Archiver，搜索引擎能够收录 Archiver 中的内容，但当用户通过搜索引擎提供的链接访问 Archiver 时，Discuz! 会自动将用户
+导向到论坛的动态页面版本，这样有助于用户方便的使用论坛各项功能及参与讨论。而当用户从其他非搜索引擎页面来到 Archiver，或直接输入
+Archiver 访问时，则仍然可以访问 Archiver 页面。
+
+<p><li><b>启用，但当用户使用浏览器访问时自动转向动态页面</b>
+<br />部分启用 Archiver，搜索引擎能够收录 Archiver 中的内容，但当用户使用浏览器访问 Archiver 时，Discuz! 会自动将用户导向到论坛的
+动态页面版本。
+</ul>
+
+<p>其中，“用户通过搜索引擎提供的链接访问 Archiver”的默认定义为用户的来路(referer)信息中，包含 google/yahoo/msn/baidu/yisou/sogou/iask/zhongsou/sohu/sina/163
+字样时，则视为通过搜索引擎来访。如果用户计算机并未提供来路信息(可能是直接输入地址访问，或安装了某些防火墙软件将来路信息屏蔽)，
+或用户的来路信息中不包含上述关键字，则视为非通过搜索引擎来访；“用户使用浏览器访问 Archiver”的默认定义为，当用户 agent 信息中
+包含 MSIE/Netscape/Opera/Konqueror/Mozilla 字样时，则视为用户使用浏览器访问 Archiver。同时，当用户的 agent 信息中包含 Bot/Crawl/Spider
+字样时，则视为搜索引擎机器人来访，当开启 Archiver 后可直接访问 Archiver 页面，以便论坛内容更好的被搜索引擎收录。
+
+<p>您可以在 ./archiver/index.php 的头几行找到上述各项关键字的定义，可按照原有格式修改，如果关键字包含 PHP 正则表达式所指定的
+特殊字符，请使用反斜线“\”转义。其中，kw_spiders 为搜索引擎机器人的 agent 关键字；kw_browsers 为用户浏览器的 agent 关键字；
+kw_searchengines 为搜索引擎域名的来路关键字。
+</ul>
+
+<br /></td></tr><tr><td class="title">Discuz! Archiver 高级技巧</td></tr>
+<tr><td><br />
+<p>从 Discuz! 4.1.0 开始，Discuz! Archiver 支持 URL 静态化，您可以在论坛 系统设置 中打开该功能，从而使论坛更容易被搜索引擎收录。
+<p>具体设置方法请参考文档<a href="advanced_urlrewrite.htm" target="_self">《Discuz! URL 静态化的使用》</a>。
+</ul></td></tr></table>
+
+<script language="JavaScript" src="footer.js"></script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Discuz! 用户使用说明书 - 高级应用</title><link rel="stylesheet" href="discuz_guide.css">
+<base target="_blank">
+</head>
+
+<body leftmargin="0" rightmargin="0" topmargin="0">
+<script language="JavaScript" src="header.js"></script>
+
+<table width="100%" cellpadding="0" cellspacing="0" border="0">
+
+<tr><td class="title">本栏目下相关链接</td></tr>
+<tr><td><br /><ul><script language="JavaScript" src="advanced.js"></script></ul><br /></td></tr>
+
+<tr><td class="title">后台防沦陷说明<a name="title"></a></td></tr>
+<tr><td><br />
+
+<p class="subtitle">起因
+
+<p>
+世界上没有不透风的墙，没有哪个系统敢说自己绝对的安全。
+可能某些时候出于安全方面的原因，如管理员密码泄漏，或者被木马盗取等，会导致管理员帐号密码被黑客窃取，
+黑客可以通过后台放置非常隐蔽的木马，更进一步，可以利用系统漏洞提升权限，这是十分危险的事情。
+
+<p class="subtitle">解决
+
+<p>
+Discuz! 出于安全性考虑，提出了后台防沦陷概念，使管理员在帐号丢失的情况下，将损失降到最小，进了后台也做放不了马，给进一步提升权限带来障碍。
+在新的版本中，我们对管理员提交的数据亦做了同前台严格程度相当的检查，保证数据进入数据库时的合法性。
+在您需要使用后台比较敏感的操作时，比如数据恢复，模板编辑等操作时，可以编辑 config.inc.php 文件。
+
+<br /><br /><table width="80%" cellpadding="0" cellspacing="0" border="0" class="code">
+<tr><td><pre>
+
+	$admincp = array();
+	$admincp['forcesecques'] = 0;		// 管理人员必须设置安全提问才能进入系统设置, 0=否, 1=是[安全]
+	$admincp['checkip'] = 1;		// 后台管理操作是否验证管理员的 IP, 1=是[安全], 0=否。仅在管理员无法登陆后台时设置 0。
+	$admincp['tpledit'] = 0;		// 是否允许在线编辑论坛模板 1=是 0=否[安全]
+	$admincp['runquery'] = 0;		// 是否允许后台运行 SQL 语句 1=是 0=否[安全]
+	$admincp['dbimport'] = 0;		// 是否允许后台恢复论坛数据  1=是 0=否[安全]
+</pre></td></tr></table><br />
+
+一般情况下，我们推荐您采用以上的设置。如果十分有必要，我们建议您操作完毕后再修改回来。
+
+<script language="JavaScript" src="footer.js"></script>
+</body>
+</html>

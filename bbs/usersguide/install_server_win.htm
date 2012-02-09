@@ -1,0 +1,170 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Discuz! 用户使用说明书 - 安装指南</title><link rel="stylesheet" href="discuz_guide.css">
+<base target="_blank">
+</head>
+
+<body leftmargin="0" rightmargin="0" topmargin="0">
+<script language="JavaScript" src="header.js"></script>
+
+<table width="100%" cellpadding="0" cellspacing="0" border="0">
+
+<tr><td class="title">本栏目下相关链接</td></tr>
+<tr><td><br /><ul><script language="JavaScript" src="install.js"></script></ul><br /></td></tr>
+
+<tr><td class="title">Discuz! 本地运行环境构建(Windows)</td></tr>
+<tr><td><br />
+<p class="subtitle">内容简介<ul>
+<p>为了方便您在本地体验/熟悉/调试 Discuz!，下面提供一篇完整的 Windows 2000/XP/2003 环境下的服务器搭建方法，您只需按照步骤逐步操作，即可轻松构建本地的 Discuz! 运行环境。</p>
+</ul><p class="subtitle">软件准备<ul>
+<p>安装进行之前需准备好以下软件：
+<br /><br /><table width="80%" cellpadding="0" cellspacing="0" border="0" class="code">
+<tr><td><pre>
+
+	IIS ：				Windows 2000/XP/2003 安装光盘
+
+	Apache :			http://httpd.apache.org/download.cgi
+
+	PHP（及4.0.6以上）：		http://www.php.net/downloads.php
+
+	MySQL（3.23 及以上）：		http://dev.mysql.com/downloads/
+
+	Zend Optimizer（1.1.0 以上）：	http://www.zend.com/store/products/zend-optimizer.php
+
+	phpMyAdmin：			http://sourceforge.net/projects/phpmyadmin/
+</pre></td></tr></table>
+
+<p>本文只是列举了撰写之时，常用的软件版本，通常情况下，安装方法也可以适合未来一定时期的版本。使用到的软件如下：IIS 5.0/6.0、
+Apache 2.0.52、PHP 4.3.9、MySQL 4.1.7、Zend Optimizer 2.5.5、phpMyAdmin 2.6.0，您也可以到 <a href=http://www.discuz.com/index.php?category=4>http://www.discuz.com/index.php?category=4</a>
+下载以上部分软件。</p>
+
+<p><b>注意：Aapche 和 IIS 选择其一即可，如果想要两者共存且能同时工作，请在安装 Apache 过程中设置好端口，默认是 80，如您可以设置
+为 8080，或者更改 IIS 的端口。</b></p>
+    
+</ul><p class="subtitle">安装 PHP </p><ul type="1">
+<li>下载后得到 php-4.3.9-Win32.zip，解压至 C:\PHP（这个路径可以随意，不过下面要是用到这个路径，请相应修改）。</p>
+
+<li>进入 C:\PHP，将 php.ini-dist 复制一份放到 C:\WINNT（ Windows XP/2003 下为 C:\Windows ）内，改名为 php.ini，然后用记事本打开，
+利用记事本的查找功能搜索 extension_dir = "./"，并将其路径指到你的 PHP 目录下的 extensions 目录，比如：extension_dir = "C:\PHP\extensions"。
+再搜索 register_globals = Off，将 Off 改成 On。如果你想让 PHP 支持更多功能模块，请按照下面的步骤去做，如果不想的话，直接保存关闭 
+php.ini 即可。</p>
+
+<p>PHP 支持的模块很多，搜索：</p>
+<table width="80%" cellpadding="0" cellspacing="0" border="0" class="code"><tr><td><pre>
+
+;Windows Extensions
+;Note that MySQL and ODBC support is now built in, so no dll is needed for it.
+;
+</pre></td></tr></table>
+
+<p>下面所列的就是 PHP 预支持的扩展模块，默认情况下都用分号在前面注释掉了，如果你想 PHP 支持某个模块，请将前面的“;”去掉即可。如果安装完毕后测试时，弹出不支持 xxx.dll 模块的话，直接将前面分号再加上去，保存后重启 Web 服务器就可以了。</p>
+
+<li>把 C:\PHP\php4ts.dll 和  C:\PHP\dlls 目录下的所有文件复制粘贴到 C:\WINNT\system32\（ Windows 2003 下为 C:\Windows\system32 ）内。</p>
+
+<li>配置 IIS 使其支持 PHP（如果您使用 Apache 作为 Web 服务器，请跳过本步）：</p>
+
+<ul type="a"><p><li>首先必须确定系统中已经正确安装 IIS，如果没有安装，需要先安装 IIS，安装步骤如下：</p>
+
+<ul><li>Windows 2000 下的 IIS 安装：
+
+<p>用 Administrator 帐号登陆系统，将 Windows 2000 安装光盘插入光盘驱动器，进入“控制面板”点击“添加/删除程序”，再点击左侧的“添加/删除 Windows 组件”，在弹出的窗口中选择“Internet 信息服务（IIS）”，点下面的“详细信息”按钮，选择组件，以下组件是必须的：“Internet 服务管理器”、“World Wide Web 服务器”和“公用文件”，确定安装。</p>
+
+<p>安装完毕后，在“控制面板”的“管理工具”里打开“服务”，检查“IIS Admin Service”和“World Wide Web Publishing Service”两项服务，如果没有启动，将其启动即可。</p>
+
+<li>Windows 2003 下的 IIS 安装：
+
+<p>由于 Windows 2003 的 IIS 6.0 集成在应用程序服务器中，因此安装应用程序服务器就会默认安装 IIS 6.0，在“开始”菜单中点击“配置您的服务器”，在打开的“配置您的服务器向导”里左侧选择“应用程序服务器（IIS，ASP.NET）”，单击“下一步”出现“应用程序服务器选项”，你可以选择和应用程序服务器一起安装的组件，默认全选即可，单击“下一步”，出现“选择总结界面”，提示了本次安装中的选项，配置程序将自动按照“选择总结”中的选项进行安装和配置。</p>
+
+<p>打开浏览器，输入：http://localhost/，看到成功页面后进行下面的操作：</p>
+
+</ul>
+
+<li>将 PHP 安装为 ISAPI 模式：</li>
+
+<p>在“控制面板”的“管理工具”中选择“Internet 服务管理器”，打开 IIS 后停止服务，然后在左侧“默认Web站点”上单击右键选择“属性”，在打开的“默认 Web 站点属性”窗口的“ISAPI 筛选器”标签里找到并点击“添加”按钮，在弹出的“筛选器属性”窗口中的“筛选器名称”栏中输入：PHP，再将可执行文件指向 php4isapi.dll 所在路径，如：C:\PHP\sapi\php4isapi.dll。</p>
+
+<p>打开“默认 Web 站点属性”窗口的“主目录”标签，找到并点击“配置”按钮，在弹出的“应用程序配置”窗口中找到并点击“添加”按钮，在弹出的窗口中新增一个扩展名映射，扩展名为 .php，单击“浏览”将可执行文件指向 php4isapi.dll 所在路径，如：C:\PHP\sapi\php4isapi.dll，然后一路确定即可。如果还想支持诸如 .php3，.phtml 等扩展名的 PHP 文件，可以重复“添加”步骤。</p>
+
+<p>再打开“默认 Web 站点属性”窗口的“的“文档”标签，找到并点击“添加”按钮，向默认的 Web 站点启动文档列表中添加 index.php 项。您可以将 index.php 升到最高优先级，这样，访问站点时就会首先自动寻找并打开 index.php 文档。</p>
+
+<p>确定 Web 目录的应用程序设置和执行许可中选择为纯脚本，然后关闭 Internet 信息服务管理器，在命令提示符中执行如下命令：</p>
+<table width="80%" cellpadding="0" cellspacing="0" border="0" class="code"><tr><td><pre>
+
+net stop w3svc
+net stop iisadmin
+net start w3svc
+</pre></td></tr></table>
+<p>打开浏览器，输入：http://localhost/，看到成功页面后，在 IIS 根目录下新建一个 phpinfo.php，内容如下：</p>
+<table width="80%" cellpadding="0" cellspacing="0" border="0" class="code"><tr><td><pre>
+
+&lt;?php
+phpinfo();
+?&gt;
+</pre></td></tr></table>
+<p>打开浏览器，输入：http://localhost/phpinfo.php，将显示当前服务器所支持 PHP 的全部信息，可以看到 Server API的模式为：ISAPI。</p>
+
+</ul><p><li>配置 Apache 使其支持 PHP（如果您使用 IIS 作为 Web 服务器，请跳过本步）：</p>
+
+<p>一般下载后得到的是一个 .exe 文件，直接双击安装，过程中需设置一下服务器名，如设置为： localhost，假设装在 C:\。</p>
+
+<p>打开 C:\Apache\Apache2\conf\httpd.conf，在最后添加如下代码：</p>
+<table width="80%" cellpadding="0" cellspacing="0" border="0" class="code"><tr><td><pre>
+
+LoadModule php4_module "C:/php4/sapi/php4apache2.dll"
+AddType application/x-httpd-php .php
+</pre></td></tr></table>
+<p>查找 DirectoryIndex，在其后面添加 index.php，保存后关闭文件，Restart Apache。</p>
+
+<p>打开浏览器，输入：http://localhost/，看到成功页面后，在 C:\Apache\Apache2\htdocs 下新建一个 phpinfo.php，内容如下：</p>
+<table width="80%" cellpadding="0" cellspacing="0" border="0" class="code"><tr><td><pre>
+
+&lt;?php
+phpinfo();
+?&gt;
+</pre></td></tr></table>
+<p>打开浏览器，输入：http://localhost/phpinfo.php，将显示当前服务器所支持 PHP 的全部信息，可以看到 Server API 的模式为：Apache2 handler。</p>
+
+</ul><p class="subtitle"><b>安装 MySQL ：</b></p><ul>
+
+<p>如果你下载的是 Windows Essentials (x86)，将得到 mysql-4.1.7-essential-win.exe，直接双击安装即可。安装过程中会提示你是不是立即进行配置，选择否即可完成安装。安装完毕后，在“开始”菜单的“运行”中输入：C:\MySQL\bin\mysqld-nt -install，运行成功之后再输入：net start mysql，将会启动 MySQL 服务。要停止 MySQL 服务，输入：net stop mysql ；如果你还想较详细的配置 MySQL，就请进入 C:\MySQL\bin 目录，运行 MySQLInstanceConfig.exe，按提示操作即可。</p>
+
+<p>如果你下载的是 Windows (x86)，解压后双击执行 Setup.exe 即可，步骤同上。</p>
+
+<p>如果你下载的是 Without installer (unzip in C:\)，直接解压到 C:\MySQL，在“开始”菜单的“运行”中输入： C:\MySQL\bin\mysqld-nt.exe -install，运行成功之后再输入：net start mysql，即可启动 MySQL 服务。要停止 MySQL 服务，输入：net stop mysql。</p>
+</p></ul>
+<p class="subtitle"><b>安装 Zend Optimizer ：</b></p><ul>
+
+    <p>下载后得到 ZendOptimizer-2.5.5-Windows-i386.exe，直接双击安装即可，安装过程要你选择 Web Server 时，选择 IIS，然后提示你是否 Restart Web Server，选择是，完成安装之前提示是否备份 php.ini，点确定后安装完成。</p>
+
+    <p>Zend Optimizer 的安装向导会自动根据你的选择来修改 php.ini 帮助你启动这个引擎。下面简单介绍一下 Zend Optimizer 的配置选项。以下为安装完成后 php.ini 里的默认配置代码（分号后面的内容为注释）：</p>
+<table width="80%" cellpadding="0" cellspacing="0" border="0" class="code"><tr><td><pre>
+
+[Zend]
+zend_optimizer.optimization_level=15
+;优化程度，这里定义启动多少个优化过程，默认值是 15，表示同时开启 10 个优化过程中的 1-4，我们可以将这个值改为 1023，表示开启全部10个优化过程。
+
+zend_extension_ts="C:\Zend\lib\ZendExtensionManager.dll"
+;Zend Optimizer 模块在硬盘上的安装路径。
+
+zend_extension_manager.optimizer_ts="C:\Zend\lib\Optimizer-2.5.5"
+;优化器所在目录，默认无须修改。
+</pre></td></tr></table></ul>
+<p class="subtitle"><b>安装 phpMyAdmin：</b></p><ul>
+
+<p>下载得到 phpMyAdmin-2.6.0.zip，将其解压到 IIS 根目录，找到并打开 config.inc.php，做以下修改：</p>
+
+<p>搜索 $cfg['PmaAbsoluteUri']，将其设置为 phpMyAdmin 目录路径，如：http://localhost/phpMyAdmin/。</p> 
+
+<p>搜索 $cfg['DefaultLang']，将其设置为 zh-gb2312。</p>
+
+<p>搜索 $cfg['DefaultCharset']，将其设置为 gb2312。</p>
+
+<p>打开浏览器，输入：http://localhost/phpMyAdmin/，若 IIS/Apache 和 MySQL 均已启动，phpMyAdmin 默认无须密码即可浏览数据库内容。</p>
+
+<p>phpMyAdmin 的具体功能，请慢慢熟悉，这里不再赘述。</p></ul>
+
+</td></tr></table>
+<script language="JavaScript" src="footer.js"></script>
+</body>
+</html>

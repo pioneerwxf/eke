@@ -1,0 +1,173 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Discuz! 用户使用说明书 - 使用常见问题</title><link rel="stylesheet" href="discuz_guide.css">
+<base target="_blank">
+</head>
+
+<body leftmargin="0" rightmargin="0" topmargin="0">
+<script language="JavaScript" src="header.js"></script>
+
+<table width="100%" cellpadding="0" cellspacing="0" border="0">
+
+<tr><td class="title">本栏目下相关链接</td></tr>
+<tr><td><br /><ul><script language="JavaScript" src="using.js"></script></ul><br /></td></tr>
+
+<tr><td class="title">日常使用</td></tr>
+<tr><td><br />
+
+</ul><p class="subtitle">Discuz! 可以在同一个空间装多个吗？<ul>
+<p>可以。
+<ul><li>若您有多个数据库，可以通过使用不同名的数据库实现；
+<li>如果只有一个数据库，在同名数据库下您可以通过使用不同的表名前缀
+实现多个 Discuz! 论坛的安装。在 config.inc.php 中将 $tablepre = 'cdb_'; 里的 cdb_ 更改为其他字符即可，比如: cdb2_ 等。
+</ul>
+
+</ul><p class="subtitle">Discuz! 靠什么存储用户登录信息？<ul>
+<p>Discuz! 采用特有的 CookieFree 技术，自建的 Session（会话跟踪体系）和 Cookie 双重方式存储登录信息。Session 存储在数据库中，
+而且不包含用户的账号密码信息，比传统的 PHP Session 更为安全可靠。同时具有 Cookie 有效性检查功能，不需人工干预即可自动选择最佳
+的登录存储方式。但需要指出的是，完全不使用 Cookie 会轻微降低 Discuz! 的页面速度，因为需要处理页面中的地址信息以传递会话的 hash。
+而且，每次您打开电脑访问 Discuz! 的时候，需要进行一次登录才行。
+
+</ul><p class="subtitle">为什么我的用户名密码都正确，但无法登录进入论坛？<ul>
+<ul><li>关闭全部浏览器后重新打开，在 Internet 选项中的 常规 页面点击删除 Cookies清除 Cookie 再试；
+<li>config.inc.php 中的 $cookiedomain 和 $cookiepath 设置有误，通常情况如果只在本域名下安装一个论坛，将 $cookiedomain 设置为空，
+$cookiepath 设为 "/" 即可。如果安装多个论坛，需要设定不同的 $cookiepath；
+<li>是否修改了模板，检查一下模板 footer.htm 是否缺少 updatesession(); 等字样，同标准版本的是否一致；
+<li>查看本地计算机和论坛时间是否一致。
+</ul>
+
+</ul><p class="subtitle"> 如何修改在线用户的记录时间？<ul>
+<p>可以通过在后台基本设置－－在线保持时间里面进行测试。该参数默认值15 分钟，您可以自行把该值调大，但从系统的角度出发，建议
+不要为了追求表面的在线人数而设置过大的在线记录时间(如大于一个小时)，因为即使最合理的设计，在线记录过多也会不同程度导致检索速度
+的降低，对于仅得到表面上增加的在线人数来说，这种做法是没有必要的。
+
+</ul><p class="subtitle"> 如何实现把附件保存在非 Discuz! 目录？<ul>
+<p>可以通过后台基本设置－－附件设置里面设置附件路径，可以是当前( Discuz! 
+目录)路径下的相对路径，也可以是绝对路径，如 Win32 系统下的 C:/www/attachments 或 *nix 系统下的 /home/user/attachments。是否为 
+Web 路径均可，只要 PHP 程序可以读写该目录。为保证这一点，首先用户需要相应权限， Unix 用户需设置该目录属性为 777 。如果您在 
+系统设置 的 常规选项 中打开了 帖子中显示图片附件 功能，则还需要配置 $attachurl ，并保证该目录可以由 Web 被直接访问。否则，这个
+变量是不起作用的，不用配置。
+
+</ul><p class="subtitle"> 我的服务器不支持邮件发送，应该如何解决？<ul>
+<p>Discuz! 自建邮件发送模块，利用该模块您可以使用公共的 SMTP 服务器或需要验证的 ESMTP 服务器来实现邮件的发送，但此模块需要系统 
+Socks 连接到远程服务器上，可能会耗费一定的时间。可以通过后台基本设置－－邮件设置对 Discuz! 邮件发送模块的设置，配置好 SMTP 参数和认证信息，然后通过检测参数功能可以对配置进行检查。
+<p>一般情况下，在 *nix 系统下，
+无须做任何改动即可快捷的发送Email。建议仅在特别需要的情况下使用 Discuz! 自建的邮件发送方式，以避免
+不必要的资源消耗。相关设置的说明在程序注释中提供。 ESMTP 模块已在中国大陆的 21cn， etang 等免费邮件服务器上验证成功。
+
+
+</ul><p class="subtitle">搜索会不会很耗系统资源？<ul>
+<p>打开全文搜索时，除非你的机器很强、内存很大，不然当帖子超过 50 万，最好还是不要打开；标题搜索资源消耗较小，可放心使用。
+
+</ul><p class="subtitle">把论坛目录下的所有文件夹属性都设置为 777 会不会有安全隐患？<ul>
+<p>如果您是虚拟主机用户，全设置成 777 是非常危险的。具体能否被人利用，需要看主机上的权限是如何设定的。总的来说危险性很大，不
+推荐这样设置。
+
+</ul><p class="subtitle">我想修改模板，该怎么做？<ul>
+<ul><li>在 系统设置 里修改（要求 ./templates/xxx 及下面的所有 .htm 文件可写，或属性为 777）；
+<li>在本地修改好后通过 FTP 上传到相应目录覆盖原有文件。
+</ul>
+ 
+</ul><p class="subtitle">Discuz! 可以修改用户名吗？<ul>
+<p>可以，您可以到系统设置里的编辑用户中进行该操作，但只有管理员才有此权限。
+
+</ul><p class="subtitle">谁可以发布论坛公告？<ul>
+<p>从 Discuz! 3.0.0 开始，管理员可以设定管理人员的权限范围，设置哪些管理人员（如版主，超级版主）可以发布公告。默认管理员与超级版主可以
+发布论坛公告。
+
+</ul><p class="subtitle">分级置顶贴和一般论坛的置顶贴有什么不同之处？<ul>
+<p>置顶贴会按照级别排序，级别低的置顶贴即使最后回复时间较晚，也会一直位于级别高的主题下面。
+
+</ul><p class="subtitle">用户栏目定制是做什么的？<ul>
+<p>您可以通过该功能，自定义一个用户资料信息的项目，显示在注册面板和控制面板内。比如，你可以增加“兴趣爱好”、“毕业学校”等，这样
+便于大家互相了解。具体的显示效果在您增加时有控制选项，您可以自由定制。比如官方论坛里个人信息中的"从哪里知道 Discuz! :"就是自己
+定制的。
+
+</ul><p class="subtitle">可不可以不在版块内显示有多少人查看？<ul>
+<p>可以，您可以进入系统设置里的 Discuz! 选项，将显示在线用户设置为：仅在首页显示即可。
+ 
+</ul><p class="subtitle">Discuz! 安装完毕后，出现 "Fatal error: Unable to read 2953 bytes in xxx/xxx.php on line 0" 怎么解决？<ul>
+<p>请使用二进制模式重新上传所有 PHP 文件，覆盖所有原来 PHP 文件，相关二进制上传的方法，请参考
+《<a href="install_faq.htm" target="_blank">安装常见问题</a>》。
+
+</ul><p class="subtitle">为什么我的页面跳转，Discuz! 代码自动插入，或 CTRL+ENTER 快速发帖不好用？<ul>
+<p>可能由于您的浏览器不支持 JS（JavaScript），请保证浏览器的 JS（JavaScript）是打开状态才可使用。
+
+</ul><p class="subtitle">怎样禁止用户发布字数过少的帖子？<ul>
+<p>您可以进入系统设置里的 Discuz! 选项，在用户权限里可以设置。
+
+</ul><p class="subtitle">为什么某些帖子内容发布之前是正常的，而发布后变为部分乱码呢？<ul>
+<p>可能您在后台设置了不当的词语过滤导致的，通常是词语长度过短，造成数据库错误的匹配。建议您去掉一些不必要的，尤其是过短的词语过滤。
+
+</ul><p class="subtitle">如何拒收论坛短信息？<ul>
+<p>您可以参考官方论坛，打开 http://www.discuz.net/pm.php?action=ignore（需要登录才能看到），旁边有详细使用说明。
+
+</ul><p class="subtitle">我的论坛突然间在线人数从 200 一下变成 1000 多，游客就有700多，人数还在不断上升，请问这是什么问题啊？<ul>
+<ul><li>看看他们从哪里来的，如果是从相近的 IP 段来的，那可能是搜索引擎的机器人；
+<li>还有一个因素就是与你的论坛后台--> 基本设置--> 服务器优化里面的在线保持时间。如果这个值设置越大表明统计的时间越长，也越不准确。
+目前为止，在 Web 上查看真实的在线人数在技术上是实现不了的，只能尽可能的接近。这不单单是程序上的问题，还涉及到其他很多方面的因素。
+在线人数"多"，而服务器资源没有太大变化，那就说明这个值一定是不准确的，程序上是计算在线保持时间内的人数，所以越大人数也越多。
+</ul>
+
+</ul><p class="subtitle">我有时要用到用户组的 groupid，怎么才能查看？<ul>
+<ul><li>使用 phpmyadmin 等数据库管理工具浏览 cdb_usergroups 表；
+<li>进入系统设置，将鼠标指针放在“用户组”->编辑的“详情”上查看浏览器左下角，edit=xx，其中的xx就是该用户组的 groupid。
+</ul>
+
+</ul><p class="subtitle">管理选项中的"重新统计"是做什么用的？ <ul>
+<p>有时候因为频繁删帖或者进行管理操作，造成论坛计数不准确，此时可以使用这个功能来重新计算一些论坛的统计数据。
+
+</ul><p class="subtitle">论坛出现 Can't open file: 'cdb_xxx.MYI' 错误是怎么回事？怎么解决？<ul>
+<p>这种问题一般都是非法关机、断电或者操作系统错误也可能是磁盘错误造成的 mysql 数据文件损坏。您可以使用标准程序包中的 ./utilities 
+目录下的 repair.php 进行修复，也可以使用 SQL 语句 REPAIR TABLE xxx; 或 myisamchk（可使用参数 -r、-o、-f）进行修复。
+
+</ul><p class="subtitle"> 论坛出现 Can't connect to local MySQL server through socket '/tmp/mysql.sock' 怎么办？<ul>
+<p>这个是数据库服务器没有启动造成的。可能属于临时故障，试着刷新页面。如果您是自己的服务器，也可以试着重启一下 MySQL。如果还不行
+请与空间商联系。
+
+</ul><p class="subtitle">论坛出现 No Database Selected 错误是怎么回事？该怎么解决？<ul>
+<p>这个是因为 config.inc.php 中指定的数据库不存在，无法选择或使用该数据库造成。我们同时也偶尔遇到用户报告这个错误，但通常刷新
+后可自行恢复，通常是因为数据库服务器不稳定，或遭遇未知问题造成的。这种情况出现的机率极小，可以尝试升级 PHP 和 MySQL 版本来解决。
+
+</ul><p class="subtitle"> 为什么会出现"未定义操作的帖子"？点击进不去，删也删不掉？<ul>
+<p>您可以进入系统设置重新统计一下论坛贴数，如果有必要，建议临时关闭论坛然后进行统计，通常问题即可解决。
+
+</ul><p class="subtitle"> 为什么安装了其他风格之后首页右上角的某些连接（如系统设置）就没有了呢？<ul>
+<p>是模板的问题，对照一下标准的 header 模板和当前 header 模板来修改；另外，不同版本的论坛风格是不能通用的，混用也易造成此类问题。
+
+</ul><p class="subtitle"> Windows 服务器上传附件时提示上传成功，可浏览该帖子时却没有发现附件，为什么？<ul>
+<ul><li>上传临时目录目录权限不对，无法写入，请设置其权限为可写。默认 Windows 的临时目录为 C:\Windows\temp；Unix 类系统的目录为 /tmp。
+这个位置可以在 php.ini 中 upload_tmp_dir 参数来指定，无论指定哪里，只要保证其 Web 服务器用户可写即可；
+<li>php.ini 中 open_basedir 被修改，限制了无法读写附件临时目录（默认为 C:\Windows\temp 或 /tmp），将其去掉限制，或加入对该目录
+写入的支持即可。
+<li>附件目录权限不对，无法写入，默认的是论坛根目录下的 ./attachments，请设置其属性为 777 或可读写；
+<li>可能是 PHP 的 ISAPI 方式与 Windows 存在兼容问题，此种问题只发生在 Windows 系统且 PHP 以 ISAPI 方式打开的情况下，如果您以上
+的问题都能够排除，请与我们联系寻求解决方案。
+</ul><br />以上的前 2 条都是服务器设置的问题，如果您是虚拟主机用户，将无法改变相应的系统设置，请寻求空间商提供技术支持。
+
+</ul><p class="subtitle"> 点击更新缓存时出现“Can not write to cache files, please check directory ./forumdata/ and ./forumdata/cache/”
+该怎样解决？<ul>
+<p>查看./templates、./attachments、./customavatar、./forumdata、./forumdata/cache、./forumdata/templates、./forumdata/threadcaches、./forumdata/logs 目录是否存在并可读写。
+
+</ul><p class="subtitle"> 怎么修改IP被禁或禁止发言会员登陆后的提示？<ul>
+<p>您可以查找修改 messages.lang.php 里的相关提示语言。
+
+</ul><p class="subtitle"> 如何在首页调用论坛的所有新帖和精华贴？<ul>
+<p>Discuz! 已经为您准备了这个功能，您只须稍加配置即可。详情请参看《<a href="advanced_javascript.htm" target="_blank">论坛 JavaScript 调用工具</a>》。
+
+</ul><p class="subtitle"> 我论坛附件增加很快， FTP 上打开 attachments 目录太慢，能不能让附件分成多个目录保存？<ul>
+<p>完全可以。您可以登陆系统设置，在 Discuz! 选项里设置附件的保存方式，默认是"标准(全部存入同一目录)"，您可以按照附件增加的速度来选择适合您论坛的附件保存方式。注意，使用非标准模式保存附件时，请确认服务器的 mkdir() 函数可用，您可以建立一个 mkdir.php 
+文件:&lt;?mkdir('testdir');?&gt;然后在服务器上运行它，如果可以发现同这个文件同级下有 testdir 目录生成并且没有报错的话，说明该函数可用。
+
+</ul><p class="subtitle"> 论坛公告栏的标题字体是否可以设置的醒目些，如加粗或红色高亮显示等？<ul>
+<p>您可以直接使用一些基本的 HTML 代码来控制，比如，你想发布标题加粗的公告，可以使用这样的标题:&lt;b&gt;公告栏标题字体加粗&lt;/b&gt;，红色高亮显示:&lt;font color=#FF0000&gt;公告栏标题字体变红色&lt;/font&gt;。 
+
+</ul><p class="subtitle"> 论坛顶部出现了一个错误提示:Warning: ob_start(): output handler 'ob_gzhandler' conflicts with 'zlib output compression' in d:\discuz\include\common.php on line 223，请问如何解决？<ul>
+<p>重复打开了 Gzip 压缩，到系统设置里的 Discuz! 选项里关闭 Gzip 压缩即可。
+
+</ul></td></tr></table>
+
+<script language="JavaScript" src="footer.js"></script>
+</body>
+</html>

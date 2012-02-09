@@ -1,0 +1,16 @@
+document.write('<div id="header">');
+document.write('<h2><a href="http://www.discuz.net/" title="discuz.net"><img src="logo.gif" alt="Discuz! Board" border="0" /></a></h2>');
+document.write('</div>');
+document.write('<br /><div class=\"menu\">');
+document.write("Discuz! 说明书栏目分类</td></tr><tr><td bgcolor=\"#F8F8F8\" align=\"center\">&nbsp;&nbsp;&nbsp;");
+document.write("[ <b><a href=\"catalog.htm\" target=\"_self\">目录</a></a></b> ] :: ");
+document.write("[ <b><a href=\"license.htm\" target=\"_self\">授权协议</a></a></b> ] :: ");
+document.write("[ <b><a href=\"intro.htm\" target=\"_self\">产品概况</a></a></b> ] :: ");
+document.write("[ <b><a href=\"install.htm\" target=\"_self\">安装指南</a></a></b> ] :: ");
+document.write("[ <b><a href=\"upgrade.htm\" target=\"_self\">升级指南</a></b> ] :: ");
+document.write("[ <b><a href=\"using.htm\" target=\"_self\">使用常见问题</a></b> ] :: ");
+document.write("[ <b><a href=\"plugins.htm\" target=\"_self\">插件相关</a></b> ] :: ");
+document.write("[ <b><a href=\"advanced.htm\" target=\"_self\">高级应用</a></b> ] :: ");
+document.write("[ <b><a href=\"buy.htm\" target=\"_self\">服务购买</a></b> ]");
+document.write('</div><br /><br />');
+document.write('<div class=\"mainbox\">');

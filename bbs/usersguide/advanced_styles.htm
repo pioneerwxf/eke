@@ -1,0 +1,214 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Discuz! 用户使用说明书 - 高级应用</title><link rel="stylesheet" href="discuz_guide.css">
+<base target="_blank">
+</head>
+
+<body leftmargin="0" rightmargin="0" topmargin="0">
+<script language="JavaScript" src="header.js"></script>
+
+<table width="100%" cellpadding="0" cellspacing="0" border="0">
+
+<tr><td class="title">本栏目下相关链接</td></tr>
+<tr><td><br /><ul><script language="JavaScript" src="advanced.js"></script></ul><br /></td></tr>
+
+<tr><td class="title">界面风格与模板定制<a name="title"></a></td></tr>
+<tr><td><br />
+<p>本文档将对 Discuz! 的界面风格以及编译模板的使用和修改方法做必要的说明，如果您热衷于使用个性化的界面，或为自己的论坛添加
+多语言特性，请仔细阅读本文档，它会给您的工作带来切实的帮助。
+
+<p class="subtitle">界面风格和模板的定义<ul>
+<ul>
+<li>模板：Discuz! 的前台程序全部使用界面与程序代码分离的技术编写，使得软件开发人员和美工设计人员可以有效的实现分工，在彼此
+不互相影响、互相依赖的情况下独立的工作。模板技术就是实现这一分工的途径，即论坛功能通过程序代码实现，而界面通过模板实现，您
+只要通过对模板的修改，即可实现对论坛界面的完全定制。
+<li>界面风格：为了方便您的界面定制的需要，对于模板中经常用到的一些参数（如字体、字号、颜色、背景等等），我们将其从模板中抽出，
+以风格变量的形式供您修改，这样在定制要求不高的情况下，您也可以通过对风格的修改实现界面的与众不同。虽然事实上只通过模板就已经
+可以实现对界面的完全定制，但界面风格的设计会使得一些常用的模板变量参数可以被很容易修改，从而减轻界面定制的工作量。而且同时，
+在 Discuz! 及大多数同类产品中，模板是必须与界面风格搭配才能产生作用的。
+</ul>
+
+</ul><p class="subtitle">Discuz! 在界面定制方面的特色<ul>
+<p>Discuz! 以来内建了极为强大和高效的编译模板功能，基于康盛创想(北京)科技有限公司独有的编译模板内核，您可以轻松的拥有以下功能：
+<p><ul>
+<li>多模板 - 一个论坛可以拥有多个完全不同的模板套系
+<li>多界面 - 基于模板的配色与字型参数自定义，根据模板的不同可定义不同内码和不同语言
+<li>多语言 - 全部语言信息保存在语言包中，修改界面只需修改语言包中的变量内容，不同分论坛可以拥有自己的语言提示
+</ul>
+
+<p>基于以上功能，Discuz! 具有以下先进特性：
+<p><ul>
+<li>风格搭配更自由，支持替换变量，论坛风格自由论坛与匹配不同的模板套系
+<li>每个分论坛可以使用不同的界面风格和语言，用户也选择自己的风格界面
+<li>由于模板中已包含了各种常用的逻辑关系系，实现用最少数量的模板建立复杂页面
+<li>界面风格打包和发布更加容易，支持默认模板和自定模板的无缝连接
+</ul>
+
+</ul><p class="subtitle">界面风格与模板定制的详细说明<ul>
+<p>Discuz! 的模板采用文件保存，默认模板保存在 ./templates/default/ 目录中，该目录下 *.htm 文件是模板文件，*.lang.php 是语言包
+文件，默认模板的目录不能被修改，而且不能被删除，否则将导致严重的问题。
+
+<p>默认模板必须包含全部的模板文件和语言包，但自定义模板则只需包含与默认模板有差别的文件即可，未被包含的文件（模板或语言包），
+系统会自动读取默认模板中的内容。例如自定义界面只修改了 header.htm 模板，在这个模板目录中只包含 header.htm 即可了。
+
+<p>自定义模板中的语言包只对该目录内包含的模板（htm）有效，不会影响到未被包含的模板和默认模板的语言信息。
+
+<p>如果需要导出论坛界面，系统会自动判断该方案使用的模板是默认模板或是自定义模板。如果使用的是自定义模板，导出的内容中将会包含
+所用到自定义模板的全部内容。因此，除了导出的文件以外，则只需打包含界面所使用的图片目录即可发布您的界面方案了。导出文件名 
+discuz_style_x。txt，该文件可用记事本打开，为了避免内部错误和提高粘贴的速度，文件采用每行 50 字的 base64 编码，以 Discuz! 2.0 
+为例，格式如下:
+
+<br /><br /><table width="80%" cellpadding="0" cellspacing="0" border="0" class="code">
+<tr><td><pre>
+
+	# Discuz! Style Dump
+	# Version: Discuz! 2.0
+	# Time: 2002-12-21 10:25 AM
+	# From: Discuz! Board (http://discuz.net/)
+	#
+	# This file was BASE64 encoded
+	#
+	# Discuz! Community: http://www.Discuz.net
+	# Please visit our website for newest infomation about Discuz!
+	# --------------------------------------------------------
+
+
+	YTo5OntzOjQ6Im5hbWUiO3M6NDoieG1hcyI7czoxMDoidGVtcG
+	xhdGVpZCI7czoxOiI0IjtzOjc6InRwbG5hbWUiO3M6NDoieG1h
+	cyI7czo3OiJjaGFyc2V0IjtzOjY6ImdiMjMxMiI7czo5OiJkaX
+	JlY3RvcnkiO3M6MTY6Ii4vdGVtcGxhdGVzL3htYXMiO3M6OToi
+
+	...
+	...
+</pre></td></tr></table>
+
+<p><b>!! 强烈建议您不要修改默认模板的任何内容 !!</b>
+
+<p>如果需新增自己的模板套系，建议将其放在 ./templates/模板的英文名称/ 目录中，这将给维护和升级带来巨大的方便。
+
+<p>Discuz! 自 2.0.0 以来，率先将编译模板技术在商业产品中实现，使得模板技术的应用有了本质的飞跃，不仅解决了困扰已久的速度瓶颈
+问题，而且模板中包含丰富易用的逻辑功能，又完美的实现了模板的可扩展性，使得一个模板足以容纳一个页面的全部信息，而不必再像以往
+那样必须用十几个小模板才能完成一个具有逻辑功能的页面。将为界面的扩充带来极大方便－－只需修改模板就可实现一些基本的页面功能而不
+必改动程序。
+
+<p>Discuz! 的模板采用近似 PHP 表达式的语法，支持的元素如下:
+
+<ul type="a">
+<li>&lt;!--{ ... }--&gt;
+<br />逻辑元素包围符，该符号用于包含条件和循环元素
+
+<br /><br /><ul type="1">
+<li>条件判断
+<br /><br /><table width="80%" cellpadding="0" cellspacing="0" border="0" class="code">
+<tr><td><pre>
+
+	&lt;!--{if expr1}--&gt;
+		statement1
+	&lt;!--{elseif expr2}--&gt;
+		statement2
+	&lt;!--{else}--&gt;
+		statement3
+	&lt;!--{/if}--&gt;
+</pre></td></tr></table>
+
+<p>这是一个典型的条件模板，当条件 expr1 为真时，显示模板 statement1 内容，否则当 expr2 为真时，显示模板 statement2 内容，否则
+显示模板 statement3 的内容。如同其他语言中的条件控制一样，其中 &lt;!--{elseif expr}--&gt; 和 &lt;!--{else} --&gt; 是非必须的。
+
+<br /><br /><li>不带下标变量的数组循环
+<br /><br /><table width="80%" cellpadding="0" cellspacing="0" border="0" class="code">
+<tr><td><pre>
+
+	&lt;!--{loop $array $value}--&gt;
+		statement
+	&lt;!--{/loop}--&gt;
+</pre></td></tr></table>
+
+<p>相当于 PHP 的数组循环语句：
+
+<br /><br /><table width="80%" cellpadding="0" cellspacing="0" border="0" class="code">
+<tr><td><pre>
+
+	foreach($array as $value) {
+		statement
+	}
+</pre></td></tr></table>
+
+<br /><li>带下标变量的数组循环
+<br /><br /><table width="80%" cellpadding="0" cellspacing="0" border="0" class="code">
+<tr><td><pre>
+
+	&lt;!--{loop $array $key $value}--&gt;
+		statement
+	&lt;!--{/loop}--&gt;
+</pre></td></tr></table>
+
+<p>相当于 PHP 的数组循环语句：
+
+<br /><br /><table width="80%" cellpadding="0" cellspacing="0" border="0" class="code">
+<tr><td><pre>
+
+	foreach($array as $key => $value) {
+		statement
+	}
+</pre></td></tr></table>
+
+<p>逻辑元素包围符在 { } 外面包含了 html 的注释符号 &lt;!-- --&gt;，除了为了和信息元素相区别外，也方便了使用 Dreamweaver 和 
+Frontpage 之类工具编辑模板的用户。因逻辑元素会被识别为 html 的注释而不被显示，对于绝大多数用户，逻辑元素中的内容是完全不需要
+修改的，甚至修改错一个字符就可能引起错误信息和整个系统无法运行。因此通常您在修改模板的时候，不要修改模板的逻辑信息，更不要将
+逻辑信息内部元素（如 &lt;!--{else}--&gt; 等）的前后位置作以修改，否则可能会导致错误。如果您的模板被不慎修改损坏，请立即用原
+标准默认模板覆盖，即可恢复。
+
+<p>对于高手而言，实际上外部的 &lt;!-- --&gt; 是可以省略不写的，可以用于某些元素在模板中的定位，但强烈建议普通用户不要轻易尝试。
+</ul>
+
+<br /><br /><li>{ ... }
+<br />信息元素包围符
+
+<ul type="1">
+<br /><br /><li>{CONSTANT}
+<br />可以引用界面替换变量，其中必须为大写字母，该符号实际的作用是引用 PHP 常量 CONSTANT，因此也可以通过它来引用其他的常量内容。
+
+<br /><br /><li>{lang variable}
+<br />可以在模板中引用语言变量 variable 的内容，语言变量经由 templates.php.lang 中数组 $language 定义。如 {lang post_edit} 的
+内容在编译模板的时候被替换为 $language['post_edit'] 的内容，简体中文版的意思是“编辑帖子”。
+
+<br /><br /><li>{template name}
+<br />模板嵌入符，为了避免模板的冗长，可以使用本符号来将 name 模板的内容嵌入本模板中（实际上为引用）。
+
+<br /><br /><li>{eval statement}
+<br />运行 PHP 语句体 statement。推荐只在特别必须的时候才使用该结构，因为它会破坏模板的结构和可读性。如 {eval echo 'template!';} 
+实现的功能为 echo 'template';
+
+<br /><br /><li>{LF}
+<br />换行符，因为 Discuz! 模板引擎会忽略掉多余的换行（\n），这个符号用来成生需要的 \n。
+</ul>
+</ul>
+
+<p>我们所推荐的模板修改方法：通过普通编辑器手工书写 html 或通过 Dreamweaver 或 Frontpage 修改。但是修改需切记，同一逻辑元素内
+或嵌套中元素的位置和内容切勿修改，即通常情况下，您不能把 &lt;!--{}--&gt; 包围的内容单独的移动，更不能删除。但是整个最外部逻辑
+结构是可以移动或删除的。
+
+<p>如果修改后模板所在页面在输出类似如下的错误信息
+Parse error: parse error, unexpected '}' in /home/username/forums/forumdata/templates/1_login.tpl.php on line 6，说明模板中出现
+了无法匹配，或格式错误的逻辑元素，请仔细检查是否有元素不对应，没有结束或嵌套损坏，格式错误的现象，必要时可以恢复原始模板来解决
+问题。
+
+<p>Discuz! 提供了方便的界面打包程序，前面已对其格式做了介绍，将导出信息的内容粘贴到 系统设置 中 风格方案 中的 导入界面方案 中，
+执行即可。程序会自动解析数据内容，恢复相关的界面设置，自定义替换变量和所需的模板设置。如果被导出界面使用了非默认模板，必须将 
+./templates 目录属性设置为 777，以便导入程序自动建立模板记录和文件夹。
+
+<p>如果想打包您所设计的界面，通常只需将界面风格下载回来后，将该风格所使用的图片目录及模板目录中的文件一同打包，附带相应的操作
+说明，即可方便的将界面与其他同一版本的 Discuz! 论坛共享。
+
+<p>再次强烈建议您不要修改默认模板的内容，不当的修改默认模板可能导致整个系统的运行故障。如果需要新增界面和修改模板，请通过新增
+模板套系的方法来实现，这将给日后的升级和维护带来巨大好处。
+
+<p>如果您看了以上的说明仍然对 Discuz! 的界面和模板不太了解，您可以打开一个默认的模板文件，对照上面的说明，相信很快就是熟悉这一
+部分的使用方法，实践出真知，祝您使用愉快，并在自己动手 DIY 界面风格的中得到满足。
+
+</ul></td></tr></table>
+
+<script language="JavaScript" src="footer.js"></script>
+</body>
+</html>

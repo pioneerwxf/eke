@@ -1,0 +1,201 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Discuz! 用户使用说明书 - 升级指南</title><link rel="stylesheet" href="discuz_guide.css">
+<base target="_blank">
+</head>
+
+<body leftmargin="0" rightmargin="0" topmargin="0">
+<script language="JavaScript" src="header.js"></script>
+
+<table width="100%" cellpadding="0" cellspacing="0" border="0">
+
+<tr><td class="title">本栏目下相关链接</td></tr>
+<tr><td><br /><ul><script language="JavaScript" src="upgrade.js"></script></ul><br /></td></tr>
+
+<tr><td class="title">升级注意事项（特别重要）</td></tr>
+<tr><td><br />
+<p><b>本文档用于帮助您将 Discuz! 升级为新的版本。在您开始升级 Discuz! 之前，请务必逐条仔细阅读以下的注意事项：</b>
+
+<p><ul>
+<li>升级之前，为了确保无误，强烈建议您备份原有数据，我们无法对升级前没有备份的用户提供任何技术支持
+<li>通常情况下，每次升级，Discuz! 都会在 ./utilities 文件夹中提供名为 upgrade(x).php 的升级程序，其中(x)为数字，用于将数据结构
+从某一版本，升级到另一新的版本
+<li>升级程序（upgrade(x).php）必须上传到服务器上论坛目录中才可使用，否则会出现错误提示而无法正常升级。切勿连同 ./utilities 目录
+一同上传，那样是无法运行的
+<li>每个升级程序只提供从某一版本到另一版本 Discuz! 的升级，而并不能一次完成多个版本的升级。假如， upgrade1.php 用于从 Discuz!
+1.0.0 升级到 2.0.0，而 upgrade2.php 用于从 Discuz! 2.0.0 升级到 2.2.0，那么，如需要从 Discuz! 1.0.0 升级到 2.2.0，必须先将 2.2.0
+程序上传到服务器上覆盖老版本文件，运行 upgrade1。php，成功后再运行 upgrade2.php 才能升级成功，以此类推
+<li>大多数情况下，您升级到一个新的版本，模板文件也将随着改变。因此如果您使用了自定义的模板，使用新版本默认模板将其覆盖是必要的
+<li>请不要将不同版本的 Discuz! 软件程序或模板混用，这样可能带来很多问题。除非您确切知道自己在做什么，及出现问题后如何处理
+<li>Discuz! 所有 php 文件必须使用二进制（BINARY）方式上传，否则不能正常使用。切记！在遇到错误提示提问之前，请先检查自己是不是
+用二进制方式上传的
+<li>如果您的论坛使用了插件或 Hack，为老版本设计的插件或 Hack 可能不能在新版本上使用。我们只能提供有限的保证在升级后的版本中，
+Hack 数据字段仍被保留，而 Hack 的程序代码，一般需要做些改动才能用于新版本
+<li>论坛升级可能偶尔需要一点系统或数据库常识，因此最好事先在本地机器上调试无误后再实地进行升级
+<li>升级也可能需要手动更新缓存，在系统设置中点相应的选项即可
+<li>升级成功后，必须马上删除服务器上的 upgrade(x).php 升级程序，以避免可能的安全问题
+</ul>
+
+<p><b>再次提醒：请您不要急于升级的过程，请务必逐条仔细阅读以上的注意事项和以下的阶段升级说明，这样将大大提高升级的成功率，
+节约您的宝贵时间。</b>
+
+<br /><br /><br /></td></tr><tr><td class="title">阶段升级说明</td></tr>
+<tr><td><br />
+
+<p class="subtitle">从 Discuz! 6.0.0 RC1 升级到 Discuz! 6.0.0 正式版<ul>
+<p>本次升级需要使用升级程序（d6rctofinal.php），并覆盖原有程序和模板。论坛升级后，请恢复默认风格或者根据新的模版进行调整
+<ul type="1">
+<li><b>首先请备份好您的论坛数据以及论坛配置文件 config.inc.php</b>
+<li>除 config.inc.php, install.php 文件外，上传 Discuz! 6.0.0 upload 目录中的所有文件到服务器覆盖原 RC 程序
+<li>上传 ./utilities/d6rctofinal.php 到论坛程序根目录下，运行之
+<li>按照操作提示，直至全部升级完毕（默认情况下无需人工干预）。如果升级中途失败，请根据提示调整数据库，重新进行升级
+<li>删除服务器上的升级程序 d6rctofinal.php
+<li>登录到论坛系统后台，调整论坛设置，更新系统缓存
+<li>升级完成
+</ul></ul>
+
+<p class="subtitle">从 Discuz! 5.5.0 升级到 Discuz! 6.0.0 正式版<ul>
+<p>本次升级需要使用升级程序（upgrade9.php），并覆盖原有程序和模板。
+<ul type="1">
+<li><b>首先请备份好您的论坛数据以及论坛配置文件 config.inc.php</b>
+<li>除 config.inc.php, install.php 文件外，上传 Discuz! 6.0.0 upload 目录中的所有文件到服务器覆盖原 5.5.0
+<li>上传 ./utilities/upgrade9.php 到论坛程序根目录下，运行之
+<li>按照操作提示，直至全部升级完毕（默认情况下无需人工干预）。如果升级中途失败，请恢复数据，根据提示调整数据库，重新进行升级
+<li>删除服务器上的升级程序 upgrade9.php
+<li>登录到论坛系统后台，调整论坛设置，更新系统缓存
+<li>升级完成
+</ul></ul>
+
+<p class="subtitle">从 Discuz! 5.0.0 升级到 Discuz! 5.5.0<ul>
+<p>本次升级需要使用升级程序（upgrade8.php），并覆盖原有程序和模板。论坛升级后，请恢复默认风格或者根据新的模版进行调整
+<ul type="1">
+<li><b>首先请备份好您的论坛数据以及论坛配置文件 config.inc.php</b>
+<li>上传全部 Discuz! 5.5.0 文件到服务器覆盖原 5.0.0
+<li>由于我们对 config.inc.php 进行了大幅度的调整，请务必使用 Discuz! 5.5.0 当中提供的新的 config.inc.php 覆盖原有的文件，然后再修改并填写正确的数据库账号信息，否则可能导致论坛出现安全问题或者无法正常使用
+<li>上传 ./utilities/upgrade8.php 到论坛程序根目录下，运行之
+<li>按照操作提示，直至全部升级完毕（默认情况下无需人工干预）。如果升级中途失败，请恢复数据，根据提示调整数据库，重新进行升级
+<li>删除服务器上的升级程序 upgrade8.php
+<li>登录到论坛系统后台，调整论坛设置，以下内容必须根据你论坛原来的使用情况进行重新设置，否则可能影响论坛的正常使用：
+<ul>
+<li>基本设置-附件设置（附件保存位置, 附件路径 URL 地址)
+<li>基本设置-服务器优化（在线保持时间)
+</ul>
+<li>升级完成
+</ul></ul>
+
+<p class="subtitle">从 Discuz! 4.1.0 升级到 Discuz! 5.0.0<ul>
+<p>本次升级需要使用升级程序（upgrade7.php），并覆盖原有程序和模板。模板因为改动很大，所以论坛原有风格可能无法使用，请恢复默认风格或者根据新的模版进行调整。
+<ul type="1">
+<li>上传全部 Discuz! 5.0.0 文件到服务器覆盖原 4.1.0。
+<li>修改 config.inc.php 文件，重新设置数据库账号信息
+<li>上传 ./utilities/upgrade7.php 到论坛程序根目录下，运行之
+<li>按照操作提示，直至全部升级完毕（默认情况下无需人工干预）
+<li>删除服务器上的升级程序 upgrade7.php
+<li>登录到论坛系统设置，调整论坛设置，并重新设置模板，更新缓存
+<li>Discuz! 5.0.0 新增“我的”功能，主要记录用户在论坛上发表的主题和回复。论坛升级完毕，用户无法查看自己以前发表的相关内容。如您的论坛确实需要将会员以前发表的内容导入到新功能之中，
+可以使用 ./utilities/myconvert.php，上传到服务器后运行之，按照提示操作即可。由于此过程需要耗费较大服务器资源，建议只有十分必要的时候才使用。
+<li>升级完成
+</ul></ul>
+
+<p class="subtitle">从 Discuz! 4.0.0 升级到 Discuz! 4.1.0<ul>
+<p>本次升级需要使用升级程序（upgrade6.php），需要覆盖原有程序和模板。模板因为改动很大，所以论坛原有风格可能无法使用，请恢复默认风格或者根据新的模版进行调整。Discuz 4.1.0 对原有模板进行了优化，去除了 MAINTABLESPACE（外表格边缘空隙）的控制，您可以通过修改（减少）TABLEWIDTH（主表格宽度）实现原来的效果。使用论坛默认的风格模板可以起到提速的效果，如果使用其他模板，请对照默认模板文件进行修改。
+<ul type="1">
+<li>上传全部 Discuz! 4.1.0 文件到服务器覆盖原 4.0.0。
+<li>修改 config.inc.php 文件，重新设置数据库账号信息
+<li>上传 ./utilities/upgrade6.php 到论坛程序根目录下，运行之
+<li>按照操作提示，直至全部升级完毕（默认情况下无需人工干预）
+<li>删除服务器上的升级程序 upgrade6.php
+<li>登录到论坛系统设置，调整论坛设置，并重新设置模板，更新缓存
+<li>升级完成
+</ul></ul>
+
+<p class="subtitle">从 Discuz! 3.1.2 升级到 Discuz! 4.0.0<ul>
+<p>本次升级需要使用升级程序（upgrade5.php），需要重新生成密匙，需要覆盖模板。
+<ul type="1">
+<li>上传全部 Discuz! 4.0.0 文件到服务器覆盖原 3.1.2。模板因为改动很大，所以也需要覆盖，否则论坛无法正常使用
+<li>将服务器上的 config.php 改名为 config.inc.php，mail_config.php 改名为 mail_config.inc.php，这个步骤特别重要，否则将出现错误提示
+<li>在 config.inc.php 中
+<table width="90%" cellpadding="0" cellspacing="0" border="0" class="code"><tr><td><pre>
+
+	$database = 'mysql';	// 'mysql' for MySQL version and 'pgsql' for PostgreSQL version
+				// MySQL 版本请设置 'mysql', PgSQL 版本请设置 'pgsql'
+</pre></td></tr></table>
+的下面，加入
+<table width="90%" cellpadding="0" cellspacing="0" border="0" class="code"><tr><td><pre>
+
+	$charset = 'gbk';		// default character set, 'gbk', 'big5', 'utf-8' are available
+				// 论坛默认字符集, 可选 'gbk', 'big5', 'utf-8'
+
+	$attackevasive = 0;	// protect against attacks via common request, 0=off,
+				// 1=cookie refresh limitation, 2=deny proxy request, 3=both
+				// 防护大量正常请求造成的拒绝服务攻击, 0=关闭, 1=cookie 刷新限制,
+				// 2=限制代理访问, 3=cookie+代理限制
+</pre></td></tr></table>
+<li>上传 ./utilities/upgrade5.php 到服务器目录下，运行之
+<li>删除服务器上的升级程序 upgrade5.php
+<li>登录到论坛系统设置，在 更新论坛统计 中，执行 重建用户精华帖数，然后 更新缓存
+<li>提示升级成功后，用户签名可能会显示有问题，需请相关用户到 控制面板 中更新一次（不需改动，只要提交即可）
+<li>升级完成
+</ul>
+
+</ul><p class="subtitle">从 Discuz! 3.1.0 升级到 Discuz! 3.1.2<ul>
+<p>本次升级不需要使用升级程序，需要重新生成密匙，不需要覆盖模板。
+<ul type="1">
+<li>上传 Discuz! 3.1.2 文件，或全部升级程序包文件到服务器论坛目录覆盖原 3.1.0
+<li>更新缓存
+<li>升级完成
+</ul>
+
+</ul><p class="subtitle">从 Discuz! 3.0.0 升级到 Discuz! 3.1.0<ul>
+<p>本次升级需要使用升级程序（upgrade4.php），不需要重新生成密匙，需要覆盖模板。
+<ul type="1">
+<li>上传全部 Discuz! 3.1.0 文件到服务器覆盖原 3.0.0。模板因为改动很大，所以也需要覆盖，否则论坛无法正常使用
+<li>上传 ./utilities/upgrade4.php 到服务器目录下，运行之
+<li>可选择是否转换帖子数据。这个步骤是可选的，您可以不进行。或进行在中途退出，甚至报错，都不会影响论坛的使用。本步的目的是使
+转换后的老帖子浏览速度加快
+<li>删除服务器上的升级程序 upgrade4.php
+<li>登录论坛，进入系统设置。会提示“需要设置安全提问”，点击相应的链接即可进入安全提问的设置。选择一个合适的问题并在下面输入
+答案后提交。页面跳转后自动变为游客状态，登录时使用原账号和密码及刚刚设定的问题和答案即可
+<li>在 系统设置 Discuz!工具 中分别进行 重建论坛帖数 和 更新缓存
+<li>升级完成
+</ul>
+
+</ul><p class="subtitle">从 Discuz! 2.0.0 升级到 Discuz! 3.0.0<ul>
+<p>本次升级需要使用升级程序（upgrade3.php），需要重新生成密匙，需要覆盖模板。
+<p>特别说明：本次升级改动很大，升级程序需要花费很长时间和占用大量 CPU 资源，升级前请务必完整备份原有数据，并选择服务器空闲时进行
+<p><ul type="1">
+<li>上传全部 Discuz! 3.0.0 文件到服务器覆盖原 2.0.0，模板也需要覆盖，否则论坛无法正常使用
+<li>在服务器新建一个目录 ./customavatars，属性 777
+<li>编辑 3.0.0 的 config.inc.php，上传至服务器覆盖原文件（因为新增了几个设置）
+<li>上传 ./utilities/upgeade3.php 到服务器目录下。运行之即可完成数据结构升级
+<li>删除服务器上的升级程序 upgrade3.php
+<li>因技术原因，升级后原有论坛设置的用户组访问，发贴等权限都被清空，您需要重新设置
+<li>如果升级后主题看不到，说明没有更新模板。请上传 3.0.0 模板覆盖原 2.0.0 的，手工访问 admincp.php 进入后台，选择使用默认模板，
+然后更新缓存
+<li>升级完成
+</ul>
+
+</ul><p class="subtitle">从 Discuz! 1.0.1 升级到 Discuz! 2.0.0<ul>
+<p>本次升级需要使用升级程序（upgrade2.php），不需要重新生成密匙，需要覆盖模板。
+<p><ul type="1">
+<li>将服务器上原 ./datatemp 目录改名为 ./forumdata，并在其下新建 templates，cache 两个新目录，三个目录属性全部设置为 777
+<li>编辑 2.0.0 的 config.inc.php，上传至服务器覆盖原文件
+<li>上传 ./utilities/upgeade2.php 到服务器目录下。运行之即可完成数据结构升级
+<li>删除服务器上的升级程序 upgrade2.php
+<li>升级完成
+</ul>
+
+</ul></ul><p class="subtitle">从 Discuz! 1.0.0 升级到 Discuz! 1.0.1<ul>
+<p>本次升级不需要使用升级程序，不需要重新生成密匙，需要覆盖模板。
+<p><ul type="1">
+<li>上传全部 Discuz! 1.0.1 文件到服务器覆盖原 1.0.0，模板也需要覆盖。
+<li>更新缓存
+<li>升级完成
+</ul>
+
+</ul></td></tr></table>
+
+<script language="JavaScript" src="footer.js"></script>
+</body>
+</html>

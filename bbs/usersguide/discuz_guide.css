@@ -1,0 +1,38 @@
+* { word-break: break-all; }
+body { background: #FFF; text-align: center; }
+body, td, input, textarea, select, button { color: #333333; font: 12px/1.6em Trebuchet MS, Helvetica, Arial, sans-serif; }
+body, ul, dl, dd, p, h1, h2, h3, h4, h5, h6, form, fieldset { margin: 0; padding: 0; }
+h1, h2, h3, h4, h5, h6 { font-size: 1em; }
+ul { color: #666666; margin-left: 12px; padding-bottom: 14px; }
+li { margin-left: 22px; line-height: 1.8em; }
+table { }
+pre { font-family: Courier, Courier New; font-weight: normal; color:#000000; }
+.code { background: #EFEFEF; border: 1px solid #CCCCCC; width: 96%; }
+.subtitle { font-size: 14px; font-weight: bold; color: #000000; padding: 5px 0; }
+p { padding: 10px 0px; }
+a { color: #006699; text-decoration: none; }
+	a:hover { text-decoration: underline; }
+	a img { border: none; }
+table { empty-cells: show; border-collapse: collapse; }
+.menu { height: 31px; line-height: 31px; border: 1px solid #E8E8E8; background: #FFF url(menu_bg.gif) repeat-x 0 0; position: relative; width: 96%; margin: 0 auto;}
+
+.mainbox { border: 1px solid #B4C9E0; padding: 1px 1px 5px; margin-bottom: 10px;  width: 96%; margin: 0 auto;}
+
+.mainbox td.title{ line-height: 21px; padding: 5px; padding-left: 1em; background: #3FA6CF url(forumbox_head.gif) repeat-x 0 0; color: #FFF;}
+	.title a { color: #FFF; }
+.mainbox table { width: 100%; }
+	.mainbox td { border-bottom: 1px solid #E8EDF2; padding: 5px 10px; }
+
+#footer { border-top: 1px solid #B4C9E0; background: #EEF5FD; color: #666; padding: 12px 0; }
+	#copyright{ font: 1em Verdana,	 Arial, Helvetica, sans-serif; line-height: 1.5em; }
+		#copyright a { color: #0954A6; }
+#header { width: 100%; overflow: hidden; }
+	#header h2 { float: left; padding: 5px 0; }
+
+pre {
+	white-space: pre-wrap;       /* css-3 */
+	white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+	white-space: -pre-wrap;      /* Opera 4-6 */
+	white-space: -o-pre-wrap;    /* Opera 7 */
+	word-wrap: break-word;       /* Internet Explorer 5.5+ */
+}

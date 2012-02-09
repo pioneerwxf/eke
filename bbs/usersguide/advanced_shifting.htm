@@ -1,0 +1,56 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Discuz! 用户使用说明书 - 高级应用</title><link rel="stylesheet" href="discuz_guide.css">
+<base target="_blank">
+</head>
+
+<body leftmargin="0" rightmargin="0" topmargin="0">
+<script language="JavaScript" src="header.js"></script>
+
+<table width="100%" cellpadding="0" cellspacing="0" border="0">
+
+<tr><td class="title">本栏目下相关链接</td></tr>
+<tr><td><br /><ul><script language="JavaScript" src="advanced.js"></script></ul><br /></td></tr>
+
+<tr><td class="title">论坛系统搬迁与转移<a name="title"></a></td></tr>
+<tr><td><br />
+<p>在使用 Discuz! 的过程中，您可能会遇到更换服务器，更换空间服务商的情况，Discuz! 可以较方便的实现论坛系统的整体搬迁，本文档
+将对如何进行论坛搬迁与数据转移作以说明。
+
+<p class="subtitle">论坛系统搬迁的要点<ul>
+<p>事实上您只需要注意以下的三点即可完成整个的系统搬迁工作：
+<p><ul>
+<li>数据库的备份与异地恢复
+<li>论坛系统文件的转移
+<li>相关的权限设定
+</ul>
+
+</ul><p class="subtitle">数据库的备份与异地恢复<ul>
+<p>您可以通过多种方式进行数据库的备份与恢复，在《<a href="advanced_mysql.htm">MySQL 备份、优化与故障处理</a>》中的《数据备份与
+恢复》一节有对此的详细说明，请根据自身的实际情况（如拥有自己的服务器，或使用虚拟主机等）使用合适的备份与恢复方式。
+
+</ul><p class="subtitle">论坛文件的转移<ul>
+<p>您需要把原服务器上论坛目录下的全部文件和下级目录完整的拷贝下来，并上传到新服务器的新建论坛目录中。同时您需要更改 config.inc.php 
+中的数据库设定，以配合新服务器上的数据库名、数据库账号等参数。在此期间可能还需要修改您的域名指向，及与空间服务商联系在新服务器
+上绑定您的域名等。
+
+</ul><p class="subtitle">相关权限设定<ul>
+<p>Windows 服务器用户可跳过此步骤。如果使用 Unix 类服务器，在论坛文件结构完整的转移后，还需要重新设置相关的文件目录权限。这种操作的方法不是惟一的，但为了说明
+方便与简化处理方式，这里仅提供一种设置的方法。
+
+<p>请参考《<a href="install_files.htm">文件及目录结构</a>》中的图示，将所有标记为绿色的目录属性设置为 777。与初次安装不同的是，
+初次安装时很多目录是空的，在论坛运行过程中，一些目录中已经保存了相关的数据文件（如附件、头像、缓存等），您除了修改目录属性外，
+还要将标记为绿色的目录中的全部内容设置为 777（包括文件、下级目录和下级目录中的文件等等），这样才能保证转移后的相关文件可被正常
+读写。
+
+<p>您在设置完所需的文件权限后，可登录系统设置，在“Discuz! 工具”中使用“文件权限检查”工具对服务器上的文件权限做全面的检查，如果
+提示为“文件及目录属性全部正确”，则可确认您的属性已完全正确的被设置，反之请根据提示对核对，以免在论坛使用的过程中出现问题。
+
+<p>至此，新的论坛已经可以成功的运行。
+
+</ul></td></tr></table>
+
+<script language="JavaScript" src="footer.js"></script>
+</body>
+</html>

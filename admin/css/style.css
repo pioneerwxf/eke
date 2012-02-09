@@ -1,0 +1,22 @@
+
+  A:link    { color:#5C5C5C; text-decoration:none;     }
+  A:visited { color:#5C5C5C; text-decoration:none;     }
+  A:active  { color:#5C5C5C; text-decoration:none;     }
+  A:hover   { color:FF6633; text-decoration:underline;}
+  
+ table,td { font-family:Arial; font-size:9pt; }
+
+body{ 
+                font-family:Arial, seoul, arial, helvetica;
+                font-size: 12px;
+                color: #666666;
+
+                scrollbar-3dlight-color:253F80;
+                scrollbar-arrow-color:ffffff;
+                scrollbar-base-color:CFCFCF;
+                scrollbar-darkshadow-color:FFFFFF;
+                scrollbar-face-color:4bac43;
+                scrollbar-highlight-color:FFFFF;
+                scrollbar-shadow-color:253F80;
+        }
+        

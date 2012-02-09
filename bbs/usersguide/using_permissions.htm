@@ -1,0 +1,46 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Discuz! 用户使用说明书 - 使用常见问题</title><link rel="stylesheet" href="discuz_guide.css">
+<base target="_blank">
+</head>
+
+<body leftmargin="0" rightmargin="0" topmargin="0">
+<script language="JavaScript" src="header.js"></script>
+
+<table width="100%" cellpadding="0" cellspacing="0" border="0">
+
+<tr><td class="title">本栏目下相关链接</td></tr>
+<tr><td><br /><ul><script language="JavaScript" src="using.js"></script></ul><br /></td></tr>
+
+<tr><td class="title">用户权限设定</td></tr>
+<tr><td><br />
+
+</ul><p class="subtitle">我想分配某个用户可访问某几个论坛的权限，该怎么做？<ul>
+<p>您可以通过以下两种方式实现：
+<p><ul>
+<li>用户组的方式：您可以新增（或使用现有的某一）用户组，在用户编辑中，将这个用户的属组改为这个特定用户组，然后在论坛编辑中，
+将该组和其他可访问本论坛的用户组设置为可以访问即可
+<li>用户权限设定方式：您可以在不新建用户组的前提下，在用户编辑中选择编辑其权限详情，出现对应每个论坛的权限设置，这个设置将只
+对当前用户生效，且和用户组对论坛的权限相互叠加，只要两者之一允许，用户则具有这项权限。这种方式适合于不方便将用户分组，而需要
+单独进行针对个别设置权限用户的的场合。
+</ul>
+
+</ul><p class="subtitle">如何增加管理组？<ul>
+<p>自 Discuz! 4.0.0 起开始支持自定义管理组的功能，您可以首先在用户组中添加一个特殊组（假定名为“实习版主”），编辑其详情，在
+“关联管理权”中选择“版主”，这样该特殊组即被归类为版主类型。此时他并不具有管理权限，您可以在管理组中找到名为“实习版主”的设定，
+赋予其相关权限。您可以将某些用户添加到该特殊组中、将用户添加到论坛的版主列表中，这样“实习版主”组的用户就具有了不同于普通版主
+的自定义管理权限了。
+
+</ul>
+</ul><p class="subtitle"> 为什么我在系统设置中将"附件最大字节数"设置为 0 (不限制)，但提示"附件最大字节数超过PHP 设定"，或者上传超过
+一定大小的附件时仍提示附件尺寸超过系统限制？<ul>
+<p>上传文件的大小除了受到用户组、附件类型尺寸功能的控制以外，还会受到 PHP 上传文件大小的限制: php.ini 中默认允许上传文件大小为 2MB
+ ，所以如果使用默认的 php.ini ，超过这个设定大小的附件将无法上传。如需允许更大的附件上传，可修改 php.ini 中 upload_max_filesize 
+ 值，如果设置超过 8MB ，则还需要修改 post_max_size 值。 
+
+</td></tr></table>
+
+<script language="JavaScript" src="footer.js"></script>
+</body>
+</html>

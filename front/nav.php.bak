@@ -1,0 +1,154 @@
+<ul id="tablist">
+<li><a <? if($current=='h') echo "class='current'";?> href="index.php"><span class="current">首页</span></a></li>
+<li><a <? if($current=='m') echo "class='current'";?> href="myshop.php"><span class="current">我的书店</span></a></li>
+<li><a <? if($current=='l') echo "class='current'";?> href="library.php"><span class="current">图书馆</span></a></li>
+<li><a <? if($current=='c') echo "class='current'";?> href="college.php" ><span class="current">学院模式</span></a></li>
+<li><a <? if($current=='b') echo "class='current'";?> href="bookshop.php"><span class="current">书店模式</span></a></li>
+<li><a <? if($current=='f') echo "class='current'";?> href="forum.php?url=index.php" ><span class="current">eKe论坛</span></a></li>
+<li><a <? if($current=='ct') echo "class='current'";?> href="contact.php" ><span class="current">联系我们</span></a></li>
+</ul>
+		
+		<div id="topics">
+			<? if($current=='h') {
+			?>
+			<div class="top-thirds">
+			<ul>
+				<li><a href="search.php" style="color:#FF3300;">☆我要求书☆</a></li>
+				<li><a href="../bbs/register.php" style="color:#FF3300; font-weight:bold;">☆我也开店☆</a><span style="color:#FFFFFF;font-weight:bold;">最新书店=></span></li>
+				<li><a <? if(!isset($discuz_userss)){?>href="../bbs/register.php"<? } else {?>
+				href="myshop.php#adb" <? }?> target="_blank" style="color:#FF3300;">☆我要出书☆</a></li>
+			</ul>
+			</div>
+			<? 
+			$query=query("shop","level>0 and booknum>0 order by date DESC limit 6");
+			$array = mysql_fetch_array($query);
+			for($i=1;$array and $i<=6;$i++){
+				$shop[$i]=$array;
+				$array = mysql_fetch_array($query);
+			}	
+			?>
+			<div class="top-thirds">
+			<ul>
+				<li><a href="bookshop.php?shop_id=<?=$shop[1][shopid]?>"><?=cut_str($shop[1][shopname],20)?>店</a></li>			
+				<li><a href="bookshop.php?shop_id=<?=$shop[2][shopid]?>"><?=cut_str($shop[2][shopname],20)?>店</a></li>			
+				<li><a href="bookshop.php?shop_id=<?=$shop[3][shopid]?>"><?=cut_str($shop[3][shopname],20)?>店</a></li>
+			</ul>
+			</div>
+			<div class="top-thirds">
+			<ul>
+				<li><a href="bookshop.php?shop_id=<?=$shop[4][shopid]?>"><?=cut_str($shop[4][shopname],20)?>店</a></li>			
+				<li><a href="bookshop.php?shop_id=<?=$shop[5][shopid]?>"><?=cut_str($shop[5][shopname],20)?>店</a></li>			
+				<li><a href="bookshop.php?shop_id=<?=$shop[6][shopid]?>"><?=cut_str($shop[6][shopname],20)?>店</a></li>
+			</ul>
+			</div>
+			<? } else if($current=='l') {?>
+			<div class="top-thirds">
+				<ul>
+					<li>人文科学：<br /> <a href="display_sort.php?sort=A"> A毛邓 </a>|<a href="display_sort.php?sort=B"> B哲学 </a>|<a href="display_sort.php?sort=H"> H语言 </a><br /> <a href="display_sort.php?sort=I"> &nbsp;I文学 </a>|<a href="display_sort.php?sort=J"> J艺术 </a>|<a href="display_sort.php?sort=K"> K历史 </a></li>
+				</ul>
+			</div>
+			<div class="top-thirds">
+				<ul>
+					<li>社会科学：<br /><a href="display_sort.php?sort=C">C社科 </a>|<a href="display_sort.php?sort=D"> D法律 </a>|<a href="display_sort.php?sort=E"> E军事 </a><br /><a href="display_sort.php?sort=F"> F经管 </a>|<a href="display_sort.php?sort=G"> G文体 </a>|<a href="display_sort.php?sort=Z"> Z综合 </a></li>
+				</ul>
+			</div>
+			<div class="top-thirds">
+				<ul>
+					<li>自然科学：<br /><a href="display_sort.php?sort=O"> O数理化 </a>|<a href="display_sort.php?sort=R"> R医药 </a>|<a href="display_sort.php?sort=Q"> Q生物 </a><br /><a href="display_sort.php?sort=T"> T计算机 </a>|<a href="display_sort.php?sort=S"> S农业 </a>|<a href="display_sort.php?sort=X"> X环境 </a></li>
+				</ul>
+		  </div>
+						<? } else if($current=='m') {?>
+			<div class="top-thirds">
+				<p><br />店长信息中心</p>
+			</div>
+			<div class="top-thirds">
+				<ul>
+					<li><a href="myshop.php#basic">基本设置</a></li>
+					<li><a href="myshop.php#allbooks">我的藏书</a></li>
+				</ul>
+			</div>
+			<div class="top-thirds">
+				<ul>
+					<li><a href="myshop.php#adb">添加藏书</a></li>
+					<li><a href="myshop.php#soldbooks">我的已售</a></li>
+					
+				</ul>
+			</div>
+			<? } else if($current=='b'){?>
+			<div class="top-thirds">
+				<? 
+			$query=query("shop","level>0 and booknum>0 order by level DESC limit 5");
+			$array = mysql_fetch_array($query);
+			for($i=1;$array and $i<=5;$i++){
+				$shop[$i]=$array;
+				$array = mysql_fetch_array($query);
+			}	
+			?>
+				<ul>
+					<li>☆<a href="bookshop.php?level=2" style="color:#FF3300;">殿堂级书店</a>☆</li>
+					<li>☆<a href="bookshop.php?level=1" style="color:#FF3300;">别墅级书店</a>☆</li>
+					<li>☆<a href="bookshop.php?level=0" style="color:#FF3300;">小屋级书店</a>☆</li>
+				</ul>
+		  </div>
+			<div class="top-thirds">
+				<ul>
+				<li><a href="bookshop.php?shop_id=<?=$shop[1][shopid]?>"><?=cut_str($shop[1][shopname],20)?>店</a></li>
+				<li><a href="bookshop.php?shop_id=<?=$shop[2][shopid]?>"><?=cut_str($shop[2][shopname],20)?>店</a></li>
+				<li><a href="bookshop.php?shop_id=<?=$shop[3][shopid]?>"><?=cut_str($shop[3][shopname],20)?>店</a></li>
+				</ul>
+			</div>
+			<div class="top-thirds">
+				<ul>
+				<li><a href="bookshop.php?shop_id=<?=$shop[4][shopid]?>"><?=cut_str($shop[4][shopname],20)?>店</a></li>			
+				<li><a href="bookshop.php?shop_id=<?=$shop[5][shopid]?>"><?=cut_str($shop[5][shopname],20)?>店</a></li>			
+				<li><a href="search.php" style="color:#FF3300;">☆点此搜索书店☆</a></li>
+				</ul>
+			</div>
+		<? } else if($current=='f') {?>
+			<div class="top-thirds">
+			<? 
+			$query=query("eke_threads,eke_forums","eke_threads.fid=eke_forums.fid order by dateline DESC limit 6");
+			$array = mysql_fetch_array($query);
+			for($i=1;$array and $i<=6;$i++){
+			$fid=$array["fid"];
+			$query_forum=query("eke_forums","fid=$fid");
+			//$forum = mysql_fetch_array($query_forum);
+			$bbs[$i]=$array;
+			$array = mysql_fetch_array($query);
+			}
+			
+			?>		
+				<ul>
+					<li>☆<a href="forum.php?url=forumdisplay.php?fid=4" style="color:#FF3300;">eKer 交流</a>☆</li>
+					<li>☆<a href="forum.php?url=forumdisplay.php?fid=5" style="color:#FF3300;">eKe 买主之家</a>☆</li>
+					<li>☆<a href="forum.php?url=forumdisplay.php?fid=6" style="color:#FF3300;">eKe 卖主之家</a>☆</li>
+				</ul>
+			</div>
+			<div class="top-thirds">
+				<ul>
+					<li><a title="<?=$bbs[1]["subject"]?>"  href="forum.php?url=viewthread.php?tid=<?=$bbs[1]["tid"]?>"><? echo cut_str($bbs[1]["subject"],25);?></a></li>
+					<li><a title="<?=$bbs[2]["subject"]?>" href="forum.php?url=viewthread.php?tid=<?=$bbs[2]["tid"]?>"><? echo cut_str($bbs[2]["subject"],25);?></a></li>
+					<li><a title="<?=$bbs[3]["subject"]?>" href="forum.php?url=viewthread.php?tid=<?=$bbs[3]["tid"]?>"><? echo cut_str($bbs[3]["subject"],25);?></a></li>
+				</ul>
+			</div>
+			<div class="top-thirds">
+				<ul>
+					<li><a title="<?=$bbs[4]["subject"]?>" href="forum.php?url=viewthread.php?tid=<?=$bbs[4]["tid"]?>"><? echo cut_str($bbs[4]["subject"],25);?></a></li>
+					<li><a title="<?=$bbs[5]["subject"]?>" href="forum.php?url=viewthread.php?tid=<?=$bbs[5]["tid"]?>"><? echo cut_str($bbs[5]["subject"],25);?></a></li>
+					<li><a title="<?=$bbs[6]["subject"]?>" href="forum.php?url=viewthread.php?tid=<?=$bbs[6]["tid"]?>"><? echo cut_str($bbs[6]["subject"],25);?></a></li>
+				</ul>
+			</div>	
+			<? }?>	
+		</div>
+		<div id="search">
+			<form method="post" action="search.php?tag=0">
+			  <p>
+				  <input class="search" 
+onblur="if(this.value==''){this.value='请输入书名关键字';this.className='search'}" 
+onfocus="if(this.value==''||this.value=='请输入书名关键字'){this.value='';this.className='search'}" 
+value="请输入书名关键字" style="color:#999999" name="key" />
+				  <input type="submit" value="给我搜" class="button"/>
+			      
+			     |<a href="search.php" class="highlight">高级搜索</a></p>
+			</form>
+		</div>

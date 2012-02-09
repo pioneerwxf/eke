@@ -1,0 +1,125 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Discuz! 用户使用说明书 - 安装指南</title><link rel="stylesheet" href="discuz_guide.css">
+<base target="_blank">
+</head>
+
+<body leftmargin="0" rightmargin="0" topmargin="0">
+<script language="JavaScript" src="header.js"></script>
+
+<table width="100%" cellpadding="0" cellspacing="0" border="0">
+
+<tr><td class="title">本栏目下相关链接</td></tr>
+<tr><td><br /><ul><script language="JavaScript" src="install.js"></script></ul><br /></td></tr>
+
+<tr><td class="title">文件及目录结构</td></tr>
+<tr><td><br />
+
+<p>Discuz! 软件包通常以 tgz（tar.gz）或 zip 的格式压缩，绝大多数压缩软件可解开此类压缩格式的软件包，解压后的目录结构如下所示：
+
+<br /><br /><table width="80%" cellpadding="0" cellspacing="0" border="0" class="code">
+<tr style="line-height: 20pt"><td width="35%"><ul>
+<li>./users_guide.htm
+<li>./usersguide/
+<li>./upload/
+	<ul style="font-style: italic; font-weight: bold">
+	<li>*.php
+	<li style="color: #C0C0C0; text-decoration: line-through">install.php
+	<li style="color: #FF0000">config.inc.php
+	<li>mail_config.inc.php
+	<li>admin/
+		<ul>
+		<li>*.php
+		</ul>
+	<li style="color: #7FFFD4">attachments/
+	<li style="color: #7FFFD4">customavatars/
+	<li style="color: #7FFFD4">forumdata/
+		<ul style="color: #7FFFD4">
+		<li>templates/
+		<li>cache/
+		<li>threadcaches/
+		<li>logs/
+		</ul>
+	<li style="color: #7FFFD4">templates/
+		<ul style="color: #7FFFD4">
+		<li>default/
+			<ul style="color: #7FFFD4">
+			<li>*.htm
+			<li>*.lang.php
+			</ul>
+		</ul>
+	<li>images/
+		<ul>
+		<li>attachicons/
+		<li>avatars/
+		<li>common/
+		<li>default/
+		<li>smilies/
+		<li>stats/
+		</ul>
+	<li>include/
+		<ul>
+		<li>*.php
+		</ul>
+	<li>plugins/
+	</ul>
+<li>./utilities/
+	<ul>
+	<li>tools.php
+	<li>upgrade(x).php
+	</ul>
+</ul></td>
+<td width="65%">
+用户使用说明书（本文档）<br />
+用户使用说明书内容与图片目录<br />
+程序及相关文件（此目录中的内容需上传）<br />
+Discuz! 程序<br />
+Discuz! 安装脚本<br />
+论坛基本配置，安装前请修改本文件<br />
+邮件发送配置<br />
+网页新帖调用程序<br />
+系统设置程序目录<br />
+系统设置程序集<br />
+空目录，请设置属性 777，用于存放附件<br />
+空目录，请设置属性 777，用于存放上传头像<br />
+空目录，请设置属性 777，用于存放备份及记录数据<br />
+空目录，请设置属性 777，用于存放编译模板文件<br />
+空目录，请设置属性 777，用于存放系统缓存<br />
+空目录，请设置属性 777，用于存放论坛页面缓存文件<br />
+空目录，请设置属性 777，用于存放论坛日志文件<br />
+模板文件目录<br />
+系统默认模板目录<br />
+系统默认模板文件<br />
+系统默认语言包文件<br />
+图片文件目录<br />
+附件图标图片目录<br />
+论坛提供头像图片目录<br />
+公用图片目录<br />
+系统默认风格图片目录<br />
+Smilies 图片目录<br />
+流量统计图片目录<br />
+引用包含目录<br />
+引用包含程序集<br />
+空目录，用于存放插件程序<br />
+论坛附带工具<br />
+Discuz!工具箱
+论坛升级程序<br />
+<br />
+</td></tr></table>
+
+<p>其中：
+<ul><b>
+<i>所有以加粗斜体字显示的文件或目录需要上传到服务器</i><br />
+所有以普通文字显示的文件或目录不需要上传<br />
+以“/”结尾的表示是目录结构<br /><br />
+<font color="#FF0000">颜色为红的文件需要在安装前修改</font><br />
+<font color="#C0C0C0" style="text-decoration: line-through">颜色为灰的文件需要在安装后删除</font><br />
+<font color="#7FFFD4">颜色为绿的文件或目录需要将其设置为 777（Windows 服务器不用设置）</font><br />
+</b></ul>
+
+</td></tr></table>
+
+<script language="JavaScript" src="footer.js"></script>
+</body>
+</html>

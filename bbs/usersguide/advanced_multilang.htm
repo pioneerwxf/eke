@@ -1,0 +1,53 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Discuz! 用户使用说明书 - 高级应用</title><link rel="stylesheet" href="discuz_guide.css">
+<base target="_blank">
+</head>
+
+<body leftmargin="0" rightmargin="0" topmargin="0">
+<script language="JavaScript" src="header.js"></script>
+
+<table width="100%" cellpadding="0" cellspacing="0" border="0">
+
+<tr><td class="title">本栏目下相关链接</td></tr>
+<tr><td><br /><ul><script language="JavaScript" src="advanced.js"></script></ul><br /></td></tr>
+
+<tr><td class="title">多语言界面的使用<a name="title"></a></td></tr>
+<tr><td><br />
+<p>本文档介绍 Discuz! 多语言技术的应用与使用方法，适用于需要在同一论坛上实现不同语言界面或将 Discuz! 翻译为其他语言文字使用的
+用户。请首先仔细阅读《<a href="advanced_styles.htm">界面风格与模板定制</a>》，在您对 Discuz! 界面和模板系统有了一定的了解后，
+依据实际需要，着手对您的论坛添加多语言的特性。
+
+<p>Discuz! 依靠不同的模板套系来实现多语言，您可以新增自定义模板套系，在该套系中包含相应的语言包，这样语言包就可以应用到模板中，
+而模板应用到新的界面风格中，从而实现同一论坛的多语言界面。即事实上，用户是通过对界面风格的选择而实现多语言提示界面的。
+
+<p>语言包是从模板中提取出来的，模板被第一次读取后，Discuz! 会自动将语言元素插入编译后的模板中，所以 Discuz! 的语言包完全不会
+影响系统的运行效率。但模板被编译后，语言包中的内容，具体讲是 templates.lang.php 语言包，如果被修改，并不能马上应用到新的模板
+中去，您必须在系统设置中使用“更新缓存”功能使模板重新编译，才能将新的语言元素应用到界面中。其他语言包没有此方面的限制。
+
+<p>默认模板中的 *.lang.php 为 Discuz! 的语言包文件，自身是标准的 PHP 程序格式。您可以依据默认的语言包，将文字翻译为其他语言，
+实现在 Discuz! 上新增语言界面的要求。
+
+<p>目前语言包共包含以下几个文件，分别对应内容如下：
+<p><ul>
+<li>actions.lang.php － 用户动作
+<li>admincp.lang.php － 系统设置
+<li>archiver.lang.php － Discuz! Archiver
+<li>customfaq.lang.php － 自定义帮助信息
+<li>emails.lang.php － Email 内容
+<li>messages.lang.php － 提示信息
+<li>misc.lang.php － 其他语言元素
+<li>modactions.lang.php － 管理动作
+<li>pms.lang.php － 短消息内容
+<li>templates.lang.php － 模板语言元素
+<li>wap.lang.php － WAP
+</ul>
+
+<p><b>注意：其中修改 templates.lang.php 必须更新缓存后才能使修改生效，其他语言包不必。</b>
+
+</td></tr></table>
+
+<script language="JavaScript" src="footer.js"></script>
+</body>
+</html>

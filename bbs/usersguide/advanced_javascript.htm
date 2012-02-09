@@ -1,0 +1,42 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Discuz! 用户使用说明书 - 高级应用</title><link rel="stylesheet" href="discuz_guide.css">
+<base target="_blank">
+</head>
+
+<body leftmargin="0" rightmargin="0" topmargin="0">
+<script language="JavaScript" src="header.js"></script>
+
+<table width="100%" cellpadding="0" cellspacing="0" border="0">
+
+<tr><td class="title">本栏目下相关链接</td></tr>
+<tr><td><br /><ul><script language="JavaScript" src="advanced.js"></script></ul><br /></td></tr>
+
+<tr><td class="title">论坛 JavaScript 调用工具<a name="title"></a></td></tr>
+<tr><td><br />
+<p class="subtitle">调用工具简介<ul>
+<p>Discuz! 随软件包提供了 html 页面调用论坛数据的工具 javascript.php，位于 ./api/ 目录下。这是一个可以用被普通 html 页面通过
+JavaScript 调用的在页面中显示论坛中某些特定数据的程序。目前可以实现在普通 html 页面中调用主题列表、论坛列表、会员排行、论坛统计、
+附件图片调用等信息。您可以通过给定不同的参数，在不需要编程的情况下，实现输出信息的定制。同时该工具已经应用了动态缓存技术，相对直
+接数据库读取的方式更为快速和稳定。
+
+<p>出于效率的考虑，本功能在论坛默认安装后是关闭的。要启用，请在 Discuz! 选项中找到“JS 调用”的部分，选择“启用 JS 调用”，同时您
+可以通过“JS 来路限制”功能来限制非自有的网站无法获取或调用您论坛的数据，即便这些数据可能并不危及您论坛的安全。例如您有两个网站，
+域名分别为 www.abc.com 和 bbs.123.com，只需设定 JS 来路限制为这两个网站的域名即可，中间用换行分隔。
+
+<p>每个 JS 调用都需要提供一些必要的参数才能正常使用，您可以在“Discuz! 工具”的“JS 调用向导”中根据提示自动生成代码，并把设置好的
+参数通过 JS 调用唯一标识为索引进行保存。代码生成后，您可以根据版面需要，将其插入到网页的任何一个部分，这样只要用户访问您的网页，便
+会自动调用相应的数据，如同网站本身的内容一样。如需要修改您可以直接点击已保存的 JS 调用唯一标识名称进入原来的代码生成页编辑即可。
+
+<p>每个 JS 调用均提供了默认的模板，您可以修改它以适合自己站点的风格，同时也提供了多种调用元素方便用户自行组合，形成不同的调用效果。
+自定义类型的 JS 调用则可以把多种已保存的 JS 调用进行组合显示。
+
+<p>详细内容可以查看官方网站“JS 调用使用方法”的文章 <a href="http://www.discuz.net/thread-548575-1-1.html" target="_blank">http://www.discuz.net/thread-548575-1-1.html</a>
+</ul>
+
+</td></tr></table>
+
+<script language="JavaScript" src="footer.js"></script>
+</body>
+</html>

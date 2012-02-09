@@ -1,0 +1,69 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Discuz! 用户使用说明书 - 高级应用</title><link rel="stylesheet" href="discuz_guide.css">
+<base target="_blank">
+</head>
+
+<body leftmargin="0" rightmargin="0" topmargin="0">
+<script language="JavaScript" src="header.js"></script>
+
+<table width="100%" cellpadding="0" cellspacing="0" border="0">
+
+<tr><td class="title">本栏目下相关链接</td></tr>
+<tr><td><br /><ul><script language="JavaScript" src="advanced.js"></script></ul><br /></td></tr>
+
+<tr><td class="title">登录表单的制作<a name="title"></a></td></tr>
+<tr><td><br />
+<p>很多用户会在主页上放一个论坛入口，这样访问者就可以从首页直接登录论坛，而不必再先进入论坛再登录。下面提供的 html 代码可以
+示范如何从首页登录 Discuz! 论坛。这段代码只是示范一下登录表单的工作原理，具体的界面、显示等需要您根据页面情况自行修改。
+
+<p><b>如果当这段代码不是放在论坛目录里，则需要把与程序相关的文件名（logging.php，register.php，index.php）加上论坛的路径。如
+logging.php?action=login 改为 http://your.com/discuz/logging.php?action=login。</b>
+
+<br /><br /><table width="80%" cellpadding="0" cellspacing="0" border="0" class="code">
+<tr><td><pre>
+
+	&lt;html&gt;
+	&lt;head&gt;
+	&lt;title&gt;login&lt;/title&gt;
+	&lt;meta http-equiv="Content-Type" content="text/html; charset=gb2312"&gt;
+	&lt;/head&gt;
+	
+	&lt;body&gt;
+	
+	&lt;form method="post" action="logging.php?action=login" target="_blank"&gt;
+	  &lt;input type="hidden" name="referer" value="index.php"&gt;
+	  &lt;table width="100%" border="0" cellspacing="0" cellpadding="0"&gt;
+	    &lt;tr&gt; 
+	      &lt;td&gt;用户名&lt;/td&gt;
+	      &lt;td&gt;
+	        &lt;input type="text" name="username"&gt;
+	      &lt;/td&gt;
+	    &lt;/tr&gt;
+	    &lt;tr&gt; 
+	      &lt;td&gt;密码&lt;/td&gt;
+	      &lt;td&gt;
+	        &lt;input type="password" name="password"&gt;
+	      &lt;/td&gt;
+	    &lt;/tr&gt;
+	    &lt;tr&gt;
+	      &lt;td colspan="2"&gt;
+	        &lt;input type="submit" name="loginsubmit" value="登录"&gt;
+	        &lt;input type="reset" name="reset" value="重置"&gt;
+	        &lt;input type="button" value="注册" onclick="javascript: this.form.action='register.php';this.form.submit();"&gt;
+	        &lt;input type="button" value="游客" onclick="javascript: this.form.action='index.php';this.form.submit();"&gt;
+	      &lt;/td&gt;
+	    &lt;/tr&gt;
+	  &lt;/table&gt;
+	&lt;/form&gt;
+	
+	&lt;/body&gt;
+	&lt;/html&gt;
+</pre></td></tr></table>
+
+</td></tr></table>
+
+<script language="JavaScript" src="footer.js"></script>
+</body>
+</html>

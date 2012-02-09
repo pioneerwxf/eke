@@ -1,0 +1,122 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Discuz! 用户使用说明书 - 安装指南</title><link rel="stylesheet" href="discuz_guide.css">
+<base target="_blank">
+</head>
+
+<body leftmargin="0" rightmargin="0" topmargin="0">
+<script language="JavaScript" src="header.js"></script>
+
+<table width="100%" cellpadding="0" cellspacing="0" border="0">
+
+<tr><td class="title">本栏目下相关链接</td></tr>
+<tr><td><br /><ul><script language="JavaScript" src="install.js"></script></ul><br /></td></tr>
+
+<tr><td class="title">安装前的特别说明</td></tr>
+<tr><td><br />
+<ul>
+<li>在安装使用本软件前，请您详细阅读本说明书中的《<a href="license.htm">授权协议</a>》文档，您的安装意味着您完全理解、同意并遵循
+授权协议的全部条款。<li>建议您在安装之前到 Discuz! 官方网站（<a href="http://www.discuz.com">http://www.discuz.com</a>）检查
+是否有最新的版本发布，我们推荐您始终安装和使用最新的 Discuz! 稳定版本。
+</ul>
+
+<br /></td></tr><tr><td class="title">安装详细流程</td></tr>
+<tr><td><br />
+
+<p class="subtitle">第 1 步：上传<ul>
+<p>使用 FTP 软件登录您的服务器，建立一个单独的目录，或选择合适的位置，确保存放在此位置的文件能够被 web 请求所访问到，并且该目录
+中具有执行 PHP 代码的权限。将 Discuz! 文件包的 ./upload 目录中的全部文件和目录结构上传到服务器（注意是上传 upload 目录中的文件
+和目录，而不是上传包含 upload 目录本身的目录和结构）。
+
+<p>如果您仍然不了解应该上传哪些内容，请参考《<a href="install_files.htm">文件及目录结构</a>》中的说明。
+
+<p><b>Discuz! 要求使用 FTP 软件上传 php 文件时，使用二进制（BINARY）方式进行，否则将无法正常使用。有关二进制上传的具体细节，请
+参考《<a href="install_faq.htm">安装常见问题</a>》中的说明。</b>
+
+</ul><p class="subtitle">第 2 步：设置目录属性<ul>
+<p><b>如果您的服务器使用 Windows 操作系统，可跳过这一步。</b>
+
+<p>您在正式安装以前，需要设置相关的目录属性，以便数据文件可以被 Discuz! 正确的读写。使用 FTP 软件登录您的服务器，将
+服务器上以下的目录属性设置为 777。
+<p><ul>
+<li>./templates
+<li>./templates/default
+<li>./templates/default/*.*
+<li>./attachments
+<li>./customavatar
+<li>./forumdata
+<li>./forumdata/cache
+<li>./forumdata/templates
+<li>./forumdata/threadcaches
+<li>./forumdata/logs
+</ul>
+
+<p>如果您仍不了解那些目录或文件需要设置属性，请参考《<a href="install_files.htm">文件及目录结构</a>》中的说明。
+
+<p>如果您不了解应该如何设置属性，请参考《<a href="install_faq.htm">安装常见问题</a>》中的说明。
+
+</ul><p class="subtitle">第 3 步：配置数据库信息<ul>
+<p>使用编辑器打开您本地机器上的默认配置文件（config.inc.php），看到以下的内容：
+<br /><br /><table width="80%" cellpadding="0" cellspacing="0" border="0" class="code">
+<tr><td><pre>
+
+	$dbhost = 'localhost';   	// database server
+					// 数据库服务器
+
+	$dbuser = 'dbuser';   		// database username
+					// 数据库用户名
+
+	$dbpw = 'dbpw';   		// database password
+					// 数据库密码
+
+	$dbname = 'discuz';		// database name
+					// 数据库名
+
+	$adminemail = 'admin@your.com';	// admin email
+					// 论坛系统 Email
+
+	$dbreport = 0;			// send db error report? 1=yes
+					// 是否发送数据库错误报告? 0=否, 1=是
+</pre></td></tr></table>
+
+<p>请依据以上的注释配置空间服务商提供的数据库服务器、用户名、密码及数据库名。如果您使用自己安装的服务器环境，我们建议您在可能
+的情况下，尽量不要使用 root 账号，而依据 Discuz! 及服务器上其他软件的需要，单独为每个程序分配账号和数据库，以减少安全问题发生
+的可能。
+
+<p><b>请您了解：数据库参数我们也无法告诉您如何设置，需要根据服务器账号的实际情况而定。如果您不了解，请咨询您的空间服务商，
+他们会完整的告诉您具体的设置方法。</b>
+
+<p>配置好参数设置后，请保存该文件（config.inc.php），并不要忘记将其上传到服务器上的论坛目录中，覆盖原有的默认配置文件。
+
+</ul><p class="subtitle">第 4 步：执行安装脚本<ul>
+<p>请在浏览器中运行 install.php，即访问 http://您的域名/论坛目录/install.php。
+
+<p>安装脚本会检查您的服务器系统环境、剩余空间、数据库环境，并具备一定的纠错功能。如果您在之前某一步骤操作有问题，通常安装脚本
+会发现并作以提示，请您根据提示再对安装过程进行检查。如果没有提示出问题，请您按照其中的说明，完成最后的安装。使用中的问题，请
+参考《<a href="using.htm">使用指南</a>》。
+
+</ul><p class="subtitle">第 5 步：运行快速设置向导<ul>
+
+<p><b>现在进行到最后一步，如果您了解整个论坛的设置则不必运行此向导。</b>
+
+<p>请在浏览器运行admincp.php，即访问 http://您的域名/论坛目录/admincp.php，进行设置，此向导将根据您论坛的类型批量设置相关参数，您可以在运行完后，再进入详细设置进行微调。
+
+
+
+<p><b>安装成功后，请通过 FTP 删除安装脚本（install.php），以避免被再次安装。</b>
+
+<br /><br /><br /></td></tr><tr><td class="title">您仍有安装问题？</td></tr>
+<tr><td><br />
+<p>我们时刻关注用户的使用感受，尽最大努力简化整个论坛的安装过程。通常情况下，按照上述步骤按部就班的操作，都可以快速的一次性
+安装成功。如果您在安装过程中遇到困难，请先检查自己是否按照上述步骤进行，先后顺序是否有不正确，或有没有漏掉某项操作等等。
+如果步骤都正确，请您阅读我们为您准备的《<a href="install_faq.htm">安装常见问题</a>》，看其中是否有对您所遇到问题的说明。当这些
+工作都进行完时，如果您的论坛仍没有顺利的安装起来，请您访问 Discuz! 官方论坛
+（<a href="http://www.discuz.net">http://www.discuz.net</a>），使用您的账号登录并将您的问题在商业用户区提出，我们将针对您的
+实际情况给出切实的解决方案。
+
+</td></tr></table>
+
+<script language="JavaScript" src="footer.js"></script>
+</body>
+</html>

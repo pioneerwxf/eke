@@ -1,0 +1,18 @@
+document.write("<li><a href=\"advanced_insenz.htm#title\" target=\"_self\">Insenz 社区营销联盟</a>");
+document.write("<li><a href=\"advanced_optimizing.htm#title\" target=\"_self\">Discuz! 优化傻瓜教程</a>");
+document.write("<li><a href=\"advanced_mysql.htm#title\" target=\"_self\">MySQL 备份、优化与故障处理</a>");
+document.write("<li><a href=\"advanced_styles.htm#title\" target=\"_self\">界面风格与模板定制</a>");
+document.write("<li><a href=\"advanced_multilang.htm#title\" target=\"_self\">多语言界面的使用</a>");
+document.write("<li><a href=\"advanced_credits.htm#title\" target=\"_self\">自定义积分系统的使用</a>");
+document.write("<li><a href=\"advanced_ecommerce.htm#title\" target=\"_self\">电子商务功能的使用</a>");
+document.write("<li><a href=\"advanced_search.htm#title\" target=\"_self\">论坛搜索引擎 (奇虎) 的使用</a>");
+document.write("<li><a href=\"advanced_archiver.htm#title\" target=\"_self\">Discuz! Archiver 使用说明</a>");
+document.write("<li><a href=\"advanced_urlrewrite.htm#title\" target=\"_self\">Discuz! URL 静态化的使用</a>");
+document.write("<li><a href=\"advanced_shifting.htm#title\" target=\"_self\">论坛系统搬迁与转移</a>");
+document.write("<li><a href=\"advanced_cusfaq.htm#title\" target=\"_self\">自定义帮助说明</a>");
+document.write("<li><a href=\"advanced_loginform.htm#title\" target=\"_self\">登录表单的制作</a>");
+document.write("<li><a href=\"advanced_javascript.htm#title\" target=\"_self\">论坛 JavaScript 调用工具</a>");
+document.write("<li><a href=\"advanced_passport.htm#title\" target=\"_self\">Discuz! Passport 接口技术文档</a>");
+document.write("<li><a href=\"advanced_defendattack.htm#title\" target=\"_self\">防御 CC 攻击说明</a>");
+document.write("<li><a href=\"advanced_admincpsafe.htm#title\" target=\"_self\">后台防沦陷说明</a>");
+document.write("<li><a href=\"advanced_tools.htm#title\" target=\"_self\">Discuz!工具箱</a>");

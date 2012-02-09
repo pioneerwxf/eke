@@ -1,0 +1,39 @@
+	<!-- Footer -->
+	<div id="footer">
+
+		<!--{if !empty($advlist['footerbanner1'])}--><div align="center" style="clear: both; margin-bottom: 5px">$advlist[footerbanner1]</div><!--{/if}-->
+		<!--{if !empty($advlist['footerbanner2'])}--><div align="center" style="clear: both; margin-bottom: 5px">$advlist[footerbanner2]</div><!--{/if}-->
+		<!--{if !empty($advlist['footerbanner3'])}--><div align="center" style="clear: both;">$advlist[footerbanner3]</div><!--{/if}--><br />
+		<!--{if !empty($advlist['float']) || !empty($advlist['couplebanner'])}-->
+			<div align="left"  style="clear: both;">
+			<script type="text/javascript" src="include/javascript/floatadv.js"></script>
+			<script type="text/javascript">
+			$advlist[float]
+			$advlist[couplebanner]
+			theFloaters.play();
+			</script>
+			</div>
+		<!--{/if}-->
+
+		<p id="footmenu">
+			<a href="$supe[siteurl]" target="_self">$supe[sitename]</a> | 
+			<a href="$supe[siteurl]/?action_site_type_panel" target="_self">{lang supe_cpanel}</a> | 
+			<a href="$supe[siteurl]/?action_site_type_map" target="_self">{lang supe_sitemap}</a> | 
+			<a href="$supe[siteurl]/?action_site_type_link" target="_self">{lang supe_friendlinks}</a> | 
+			<a href="mailto:$adminemail" target="_self">{lang contactus}</a></p>
+		<p id="copyright">
+			Powered by <a href="http://www.supesite.com" target="_blank"><strong>Supe<span>Site</span></strong></a> &amp; <strong><a href="http://www.discuz.net" target="_blank"><span>Discuz!</span></a></strong> <em>$version</em>
+			&copy; 2001-2007 <a href="http://www.comsenz.com" target="_blank">Comsenz Inc.</a>
+			<!--{if debuginfo()}-->
+				<br /><span id="debuginfo">Processed in $debuginfo[time] second(s), $debuginfo[queries] queries<!--{if $gzipcompress}-->, Gzip enabled<!--{/if}--></span>
+			<!--{/if}-->
+		</p>
+	</div>
+	<!-- /Footer -->
+</div>
+</body>
+</html>
+
+<!--{if !empty($jsmenu) && (empty($bbclosed) || $adminid == 1)}-->{template jsmenu}<!--{/if}-->
+</body></html>
+{eval output();}

@@ -1,0 +1,118 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Discuz! 用户使用说明书 - 使用常见问题</title><link rel="stylesheet" href="discuz_guide.css">
+<base target="_blank">
+</head>
+
+<body leftmargin="0" rightmargin="0" topmargin="0">
+<script language="JavaScript" src="header.js"></script>
+
+<table width="100%" cellpadding="0" cellspacing="0" border="0">
+
+<tr><td class="title">本栏目下相关链接</td></tr>
+<tr><td><br /><ul><script language="JavaScript" src="using.js"></script></ul><br /></td></tr>
+
+<tr><td class="title">经验技巧</td></tr>
+<tr><td><br />
+
+<p class="subtitle"> 如何优化我的 Discuz! 让它运行更快？<ul>
+<p>由于 Discuz! 是使用数据库的应用程序，因此数据库的大小，也就是贴子数目，会员数目等直接影响到各项检索的速度。但您尽可以放心， D
+iscuz! 经过特别的耐高压设计，确保在任何时候都可以比功能或级别相近的其他产品容纳更多的文章和在线人数是我们始终追求的目标。除去贴
+子和在线人数的因素，您可以尝试从以下几个方面入手优化 Discuz! :<br /><ul><li>
+1.在系统设置中常规选项打开页面Gzip 压缩，在支持 Gzip 压缩的 PHP 系统上可以提高页面打开速度数倍;<li>2.将 config.inc.php
+ 中 $tplrefresh 的值置 0 或调大(最大为 9)。这是个专家参数，关系到模板刷新的时间检查，如果您不完全了解原理，切勿修改;<li>3.定期优化数据表，
+ 如每周或每三天;<li>4.选择装有 Zend Optimizer 的空间商， Zend Optimizer是免费软件，可以在一定程度上提高PHP代码的运行速度;<li>5.选择装有Zend Perf
+ ormance Suite 的空间商(很少见)，Zend Performance Suite 是商业软件，由于Discuz! 是代码与数据库并
+ 重的论坛产品，该软件可以极为巨大的提高   Discuz! 的运行效率。</ul><ul>
+ <br />
+下面列出几个可能会影响 Discuz! 效率的功能，如果不必要，您可以在系统设置中将其关闭:
+<br />
+<li>1。论坛统计功能;<li>2。贴子列表显示加点的图标;<li>3。过多的 Smilies 或词语过滤;
+<br />
+注意: 鉴于Discuz! 特别设计的体系结构，可能会和其他论坛产品有所不同，没有列出来的其他功能，作者都认为打开与关闭不会对程序效率产生
+大的影响，您可放心的使用。
+除了上述功能以外，建议您不要设置过多的"用户组"，"词语过滤"和"Smilies代码"，因为过多的设置会导致检索和替换的过程变得缓慢。当然，
+如果您的设置内容数目在默认(初始安装)数目的 2 倍以内，都被认为是较合理的范围，不会耗费过多时间。</ul>
+
+<p class="subtitle">能否从远程服务器恢复备份数据？<ul>
+<p>可以的。Discuz! 的数据备份功能支持远程数据调用，您不需要事先将数据文件下载，只要在数据恢复中写入远程服务器上的备份数据文件名即可，例如http://www.your.com/forumdata/dz_0108_j3dhsgr-1.sql，如果您是多卷备份，请从起始卷（第一卷）开始，逐次输入到最后一卷的
+文件名。远程数据调用需要两台主机之间的网络速度较快，否则可能导致超时错误。由于是文件传输，所以并不需要远程数据库连接的权限。
+
+</ul><p class="subtitle">我想修改贴子列表上部的页码显示个数，该如何做？<ul>
+<p>现在默认值为 10。修改方法为：打开 ./include/global.func.php，找到 function multi 的行，在下面可以看到 $page = 10; 字样。将10修改为您需要的页码个数即可。
+
+</ul><p class="subtitle">为什么不提供管理记录的删除功能？<ul>
+<p>Discuz! 管理记录用文件保存，为了防止记录被非法删除，自动存留 15 天内的最新记录，这些记录占用不了很多的空间，不需手工删除。
+如一定要删除，可通过FTP 直接删除 ./forumdata/(xxx)log.php 即可。
+
+</ul><p class="subtitle">请给出论坛统计中 Discuz! 论坛活跃指数的计算方法。<ul>
+<p>论坛活跃指数由以下五项经过系数相乘后相加而成：
+<p><ul>
+<li>(每天增加会员数/会员总数 + 每天增加帖子数/帖子总数) * 1500
+<li>平均每帖回复数 * 10
+<li>人均会员发帖数 * 1
+<li>发帖会员占总会员百分比 * 0.1
+<li>每个访问者的浏览页数 * 1
+</ul>
+<p>如果您有认更合理的计算方法，欢迎和我们联系。
+
+</ul>
+
+</ul><p class="subtitle"> 我想在帖子中显示会员的性别该怎么做？<ul>
+<p>通常您只需要修改 index 模板即可，查找: {lang postnum} $post[postnum] ，在其后面添加:<br />
+	{lang gender}&ampnbsp;
+	&lt!--{if $post['gender'] == 1}--&gt{lang male}
+		&lt!--{elseif $post['gender'] }--&gt{lang female}
+		&lt!--{else}--&gt{lang secret}
+	&lt!--{/if}--&gt
+
+</ul><p class="subtitle"> 如何禁止普通会员复制帖子内容？<ul>
+<p>修改 header 模板，查找&amp;ltbody ，然后后面添加:&lt!--{if !in_array($groupid，array(1,2,3))}--&gt  oncopy="return false;" oncut="
+return false;"&lt!--{/if}--&gt这样可以禁止除版主以上级别的用户的复制动作，如果还想开放某些用户组的复制权限，可以在1，2，3后面加其他用户组的 groupid ，之间用英文半角逗号分隔。
+
+</ul><p class="subtitle"> 怎样对所有会员进行加分奖励？<ul>
+<p>您可以以登录论坛后台，在用户管理 --> 积分奖惩里面进行奖惩
+
+</ul><p class="subtitle"> 如何将登陆 cookie 有效期默认设置成 浏览器进程 ？<ul>
+<p>修改论坛根目录下的logging.php :查找 $cookietimecheck = array((isset($_DCOOKIE['cookietime']) ? intval($_DCOOKIE['cookietime']) : 2592000) => 'checked'); ，替换成: $cookietimecheck = array((isset($_DCOOKIE['cookietime']) ? intval($_DCOOKIE['cookietime']) : 0) => 'checked'); 。
+
+</ul><p class="subtitle"> 怎样让发帖时在主题上自动加上发帖日期？<ul>
+<p>打开模板 viewthread。htm ，搜索: {lang subject}: $thread[subject] ，然后在后面加入:<span class=smalltxt>[&lt!--{echo gmd
+ate("$dateformat"， $thread['dateline'] + $timeoffset * 3600)}--&gt]</span>这样只需要在模板中进行修改就可以了。
+
+</ul><p class="subtitle"> 管理员密码忘记了怎么办？<ul>
+<p>可以使用Discuz!工具箱中的恢复管理员密码功能进行修改，详情请见《<a href="advanced_tools.htm" target="_blank">Discuz!工具箱</a>》
+
+
+</ul><p class="subtitle"> 如何清除论坛所有的登陆IP记录？<ul>
+<p>先关闭论坛，进入"系统设置"里的"数据库"，"数据升级"中输入: UPDATE `cdb_posts` SET `useip` = '';UPDATE `cdb_members` SET `regip`
+= ''，`lastip` = '' ; 提交即可;这样会将用户注册时候的 IP 也删除掉。如果不想删除用户注册时候的 IP ，可以将第2句换成: UPDATE `cdb_
+members` SET `lastip` = '' ;
+
+
+</ul><p class="subtitle"> 如何不让游客看到已注册用户的详细资料？<ul>
+<p>打开 viewpro.php ，查找: $discuz_action = 61; ，在后面添加:if (!$discuz_uid) {        showmessage('对不起，游客无权
+查看注册会员的资料。');}
+
+</ul><p class="subtitle"> 我想重置会员的积分和发帖数，使两者相等该怎么做？<ul>
+<p>如果发1贴加1分，可以在系统设置的数据库升级或 phpmyadmin 里运行如下语句:UPDATE `cdb_members` SET credit=postnum; ，
+同理发1帖加2分就是:UPDATE `cdb_members` SET credit=postnum*2; 。
+
+</ul><p class="subtitle"> 为什么不提供管理记录的删除功能？<ul>
+<p>Discuz! 管理记录用文件保存，为了防止记录被非法删除，系统自动存留 500 条最新的记录，并占用不了很多空间，不需手工删
+除。如一定要删除，通过 FTP 直接操作 ./forumdata/xxlog.php即可。
+
+</ul><p class="subtitle"> 怎样设置才能让游客只能浏览论坛主题列表，不能浏览帖子内容？<ul>
+<p>您可以进入系统设置编辑游客组的权限详情，禁止其浏览帖子即可。
+
+
+</td></tr></table>
+
+<script language="JavaScript" src="footer.js"></script>
+</ul>
+</ul>
+</ul>
+</ul>
+</body>
+</html>

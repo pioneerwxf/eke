@@ -1,0 +1,68 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Discuz! 用户使用说明书 - 使用常见问题</title><link rel="stylesheet" href="discuz_guide.css">
+<base target="_blank">
+</head>
+
+<body leftmargin="0" rightmargin="0" topmargin="0">
+<script language="JavaScript" src="header.js"></script>
+
+<table width="100%" cellpadding="0" cellspacing="0" border="0">
+
+<tr><td class="title">本栏目下相关链接</td></tr>
+<tr><td><br /><ul><script language="JavaScript" src="using.js"></script></ul><br /></td></tr>
+
+<tr><td class="title">服务器相关</td></tr>
+<tr><td><br />
+</ul><p class="subtitle">为什么我点击附件的时候显示其下载而不是直接打开？<ul>
+<p>直接打开可能会产生基于当前域的安全问题，例如 flash 文件因其自身功能十分强大而产生了可以被利用以盗取访问者 Cookies 的安全
+隐患。因此默认情况下所有附件点击后均是提示保存到本地的，这样避免了可能的安全问题。
+
+</ul><p class="subtitle">我的 ./attachments 目录已经设置为 777，附件尺寸又比较小，为什么还是不能上传附件？<ul>
+<p>这可能是空间服务商禁止了文件上传的功能。Discuz! 的文件上传可自动依据不同的环境进行多种方式的附件上传，因此只要您的服务器
+具备上传的条件，便一定可以上传成功。如果您使用自己的服务器，请检查 php.ini 中 file_uploads 的设置是否为 On，同时检查 upload_max_filesize
+和 post_max_size 的设定是否过小。
+
+</ul><p class="subtitle">我的服务器不支持邮件发送，应该如何解决？<ul>
+<p>Discuz! 自建邮件发送模块，利用该模块您可以使用公共的 SMTP 服务器或需要验证的 ESMTP 服务器来实现邮件的发送，但此模块需要系统 
+Socks 连接到远程服务器上，可能会耗费一定的时间。在 mail_config.inc.php 中提供了对 Discuz! 邮件发送模块的设置，配置好 该文件
+中的 SMTP 参数和认证信息，可以使用Discuz!工具箱中的邮件测试功能进行测试，详情请见《<a href="advanced_tools.htm" target="_blank">Discuz!工具箱</a>》。
+
+<p>一般情况下，在 Unix 类系统中，只需使用 $mailsend = 1 (默认方式) 即可快捷的发送 Email。建议仅在特别需要的情况下才使用 Discuz! 
+自建的邮件发送方式，以避免不必要的资源消耗。相关设置的说明在程序注释中提供，ESMTP 模块可支持常用的验证方式，在中国大陆的 21cn，
+etang 等免费邮件发送服务器上验证成功。
+
+</ul><p class="subtitle">为什么我打开论坛时出现了下载提示？<ul>
+<p>因为您的服务器 PHP 版本低于 4.0.4，不支持 GZip 压缩，而这个功能又被打开。正常情况下，Discuz! 是会判断 PHP 版本而给出提示的，但
+原有的数据(如导入的数据)中则不会被检查。您可以在 phpMyAdmin 等数据库管理工具中运行 UPDATE cdb_settings SET gzipcompress='0';这条 SQL 
+语句关闭 GZip 压缩，然后将论坛根目录下的 ./forumdata/cache 中的文件全部删除，即可正常使用论坛。
+
+</ul><p class="subtitle">Discuz! 使用时出现乱码，应该如何解决？<ul>
+<p>此为服务器不支持中文编码所致，修改 config.inc.php 中的 $headercharset = 1 即可。但使用该功能可能会影响到附件下载等功能。
+
+</ul><p class="subtitle"> 我进入 FTP 正常，但在打开 forumdata 目录时经常出现下面提示: “150 Opening ASCII mode data connection for file 
+list错误:> 控制连接已关闭”。这是怎么回事？该怎么解决？<ul>
+<p>1. 检查本地网络是否存在防火墙之类的软件。有可能是 FTP 软件本地映射端口(一般都是随机的，但是在 FTP 软件登陆的时候会显示使用的是哪
+个端口)被屏蔽了;
+<br />2. 如果上面都不行，可以试着这样做:在论坛新建立一个目录，名字随便，只要不重名就行，然后试着使用 FTP 移动功能将 formdata 目录移动到
+这个新建的目录里面，如果成功，那么就会发现论坛根目录下面没有 forumdata 目录了，这时候，你使用 FTP 新建立一个 forumdata 目录，然后，设置其属性为 777 ，接下来进入这个目录，在里面建立 accesslogs 、cach
+e 、   templates 三个目录，并使其属性都为777。 最后打开论坛，开始需要刷新一下页面重新建   立缓存文件，这样应该就可以了。5。 如果以上方
+法均无法解决问题，请您与空间商联系。
+
+</ul><p class="subtitle"> 我的安全提问和答案都设置好了的，可为什么一进系统设置就提示:"您还没有使用安全登录，请在控制面板中设置您的安全提
+问后，再访问系统设置。您可以 点击这里 进入安全提问的设置。"？<ul>
+<p>您可以尝试下面两种方法:1。 退出论坛，关闭所有浏览器窗口，清除 Cookie ，然后重新登陆论坛;2。 检查 config.inc.php 中的 $cookiepath 变
+量是否设置为: $cookiepath = '/' 。
+
+
+
+
+
+
+
+</td></tr></table>
+
+<script language="JavaScript" src="footer.js"></script>
+</body>
+</html>

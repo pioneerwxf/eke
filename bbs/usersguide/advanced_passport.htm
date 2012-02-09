@@ -1,0 +1,513 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Discuz! 用户使用说明书 - 高级应用</title><link rel="stylesheet" href="discuz_guide.css">
+<base target="_blank">
+</head>
+
+<body leftmargin="0" rightmargin="0" topmargin="0">
+<script language="JavaScript" src="header.js"></script>
+
+<table width="100%" cellpadding="0" cellspacing="0" border="0">
+
+<tr><td class="title">本栏目下相关链接</td></tr>
+<tr><td><br /><ul><script language="JavaScript" src="advanced.js"></script></ul><br /></td></tr>
+
+<tr><td class="title">Discuz! Passport 接口技术文档<a name="title"></a></td></tr>
+<tr><td><br />
+<p>从 Discuz! 4.0.0 RC4 版本开始，Discuz! 内嵌了一个独特的 Passport（通行证） 接口，利用此接口，用户将很容易将论坛与其他应用
+程序整合，而实现统一登录与退出、用户数据共享、积分同步等功能。可以整合的应用程序包括内容管理系统（CMS）、商城系统、游戏系统等
+等，如您对这方面功能有兴趣或有需求，请继续阅读本文档。
+
+<p class="subtitle">Discuz! Passport 的优点
+<ul>
+<p>Discuz! Passport 系统使用了 Discuz! 独有的技术，并不等同于以往使用过的一些方法，与传统的实现方式相比，具备（不限于）以下优势：
+<br /><br /><li>基于私有密匙的低相关性可逆加密算法，配合 MD5 校检码技术，使得暴力破解或伪造几乎不可能。
+<li>应用程序可与论坛放置于不同的服务器及不同的域名下。可基于不同操作系统、不同程序语言和不同数据库平台，具备真正的平台无关性。
+<li>不需要任何形式的数据库连接、或强制把两套应用程序的数据放在同一数据库甚至同一数据表中。论坛与应用程序都有各自的用户数据表，
+只是在需要时进行无缝同步操作。
+<li>对应用程序的代码改动简便易行，可最快速的完成应用程序与论坛间的整合。
+</ul>
+
+<p class="subtitle">Discuz! Passport 的局限
+<ul>
+<p>您在开始利用 Discuz! Passport 进行二次开发时，需要了解这个系统的局限性，以对未来的工作进行正确的评估与安排。
+<br /><br /><li>只能工作在用户密码不加密、可逆加密或 MD5 加密的情况下，否则论坛后台无法登录。
+<li>只能与一种应用程序关联，即二方关联。不能实现三方关联或与更多的应用程序进行关联。
+<li>应用程序需具有独立的注册、登录、退出页面和链接，否则需要自行修改论坛中的相应表单或程序。
+<li>由于论坛的注册人数可能很多，例如百万级以上，且应用程序和论坛间的用户数据是同步的，因此要求应用程序能够稳定的负载大量用户的
+访问。
+</ul>
+
+<br /></td></tr><tr><td class="title">Discuz! Passport 原理与流程</td></tr>
+<tr><td><br />
+<p class="subtitle">假设已设置如下变量或参数
+<p><ul>
+<li>挂接 Discuz! Passport 的应用程序假设为一套 PHP 语言编写的 CMS 系统
+<li>Discuz! 的 URL 为 http://www.myforums.com
+<li>应用程序的 URL 为 http://www.mywebsite.com
+<li>应用程序的注册页面为 http://www.mywebsite.com/register.php
+<li>应用程序的登录页面为 http://www.mywebsite.com/login.php?action=login
+<li>应用程序的退出页面为 http://www.mywebsite.com/login.php?action=logout
+</ul>
+
+<p class="subtitle">开启通行证后的用户登录流程
+<p><ul type="1">
+
+<li>如果用户在论坛点击“登录”，则转向到事先设置好的应用程序登录页面（http://www.mywebsite.com/login.php?action=login），并在登录页面
+的 URL 中加入参数 forward（加入 forward 后的链接例如 http://www.mywebsite.com/login.php?action=login&forward=http://www.myforums.com/index.php），
+用于在登录后将用户导向到指定的 URL。
+
+<br /><br /><li>应用程序收到此请求后，按照惯例生成表单，并<u>增加一个表单变量 <input type="hidden" name="forward" value="<?=htmlspecialchars($_GET['forward'])?>">，
+将 GET 方式传递过来的 forward 参数通过表单进行传递。</u>
+
+<br /><br /><li>用户在应用程序的表单中填写登录信息，并提交到应用程序的登录验证程序。应用程序验证用户提交的用户名和密码的合法性：
+
+<ul>
+
+<br /><li>如果不通过：提示用户名密码错误，要求其返回上一页重新填写。
+
+<br /><br /><li>如果通过，需要进行如下操作：
+
+<ul>
+
+<br /><li>设置自身 Cookie 或 Session，使得应用程序自身处于登录状态。
+
+<br /><br /><li><u>检查表单中是否提交了 forward 变量，如有，则意味着登录请求可能是由论坛而来，将此变量传递到后面的请求中。如没有，自行生成 forward
+变量，使得论坛登录后能够跳转回到应用程序中。</u>
+
+<br /><br /><li><u>通过 header('Location: http://www.myforums.com/api/passport.php?action=login&auth=xxx&forward=http://yyy&verify=zzz') 的
+方式，将登录请求传递到论坛进行处理。其中 auth 用来将用户信息与资料以特定的格式，加密传递给论坛，forward 用于告知论坛 Passport API 完成
+自身操作后转向到的 URL 地址，verify 用于验证前面两个变量的有效性。auth、forward、verify 格式与结构将在后面进行说明。</u>
+
+</ul>
+
+</ul>
+
+<br /><br /><li>Discuz! Passport API 在接收到由应用程序通过 header() 提交过来的请求后，进行如下操作：
+
+<ul>
+
+<br /><li>根据 verify 判断 auth 和 forward 变量是否合法，如合法则继续，否则终止。
+
+<br /><br /><li>将 auth 根据既定算法解密，并还原成数组，数组的内容与格式将在后面进行说明。根据数组中的内容，检查此用户是否存在。如存在，则根据
+上述数组中的内容 UPDATE 论坛中相应的用户资料。如不存在，则使用数组中的信息 INSERT 到论坛用户资料表中。
+
+<br /><br /><li>论坛设置 Cookie 或 Session，使得论坛自身处于登录状态。
+
+<br /><br /><li>根据应用程序反馈的 forward 值，通过 header('Location: http://xxx') 的形式将页面跳转到 forward 变量指定的 URL。
+
+</ul>
+
+<br /><br /><li>至此，登录流程结束
+
+</ul><p class="subtitle">开启通行证后的用户退出流程
+<p><ul type="1">
+
+<li>如果用户在论坛点击“退出”，则转向到事先设置好的应用程序退出页面（http://www.mywebsite.com/login.php?action=logout），并在登录页面
+的 URL 中加入参数 forward（例如 http://www.mywebsite.com/login.php?action=login&forward=http://www.myforums.com/index.php），用于
+在退出后将用户导向到指定的 URL。
+
+<br /><br /><li>应用程序收到此请求后，清除自身 Cookie 或 Session，使得应用程序自身处于非登录状态。
+
+<br /><br /><li><u>检查是否提交了 forward 变量，如有，则意味着登录请求可能是由论坛而来，将此变量传递到后面的请求中。如没有，自行生成 forward
+变量，使得论坛登录后能够跳转回到应用程序中</u>。
+
+<br /><br /><li><u>通过 header('Location: http://www.myforums.com/api/passport.php?action=logout&forward=http://yyy&verify=zzz') 的方式，将
+退出请求传递到论坛进行处理。其中 forward 用于告知论坛 Passport API 完成自身操作后转向到的 URL 地址，verify 用于验证 forward 变量的
+有效性。forward、verify 格式与结构将在后面进行说明</u>。
+
+<br /><br /><li>Discuz! Passport API 在接收到由应用程序通过 header() 提交过来的请求后，进行如下操作：
+
+<ul>
+
+<br /><li>根据 verify 判断 forward 变量是否合法，如合法则继续，否则终止。
+
+<br /><br /><li>清楚论坛的 Cookie 或 Session，使得论坛自身处于非登录状态。
+
+<br /><br /><li>根据应用程序反馈的 forward 值，通过 header('Location: http://xxx') 的形式将页面跳转到 forward 变量指定的 URL。
+
+</ul>
+
+<br /><br /><li>至此，退出流程结束。
+
+</ul><p class="subtitle">开启通行证后的用户注册流程
+<p><ul type="1">
+
+<li>如果用户在论坛点击“注册”，则转向到事先设置好的应用程序注册页面（http://www.mywebsite.com/register.php），并在注册页面的 URL 中
+加入参数 forward（例如 http://www.mywebsite.com/register.php?forward=http://www.myforums.com/index.php），用于在注册后将用户导向到
+指定的 URL
+
+<br /><br /><li>应用程序收到此请求后，按照惯例生成表单，并<u>增加一个表单变量 <input type="hidden" name="forward" value="<?=htmlspecialchars($_GET['forward'])?>">，
+将 GET 方式传递过来的 forward 参数通过表单进行传递</u>
+
+<br /><br /><li>用户在应用程序的表单中填写注册信息，并提交到应用程序的注册验证程序。应用程序验证用户提交信息的完整性和合法性：
+
+<ul>
+
+<br /><li>如果不通过：提示其问题所在，要求其返回上一页重新填写
+
+<br /><br /><li>如果通过，需要进行如下操作：
+
+<ul>
+
+<br /><li>将用户资料插入到应用程序自身用户数据库中
+
+<br /><br /><li>设置自身 Cookie 或 Session，使得应用程序自身处于登录状态
+
+<br /><br /><li><u>检查表单中是否提交了 forward 变量，如有，则意味着注册请求可能是由论坛而来，将此变量传递到后面的请求中。如没有，自行生成 forward
+变量，使得论坛注册后能够跳转回到应用程序中</u>
+
+<br /><br /><li><u>通过 header('Location: http://www.myforums.com/api/passport.php?action=login&auth=xxx&forward=http://yyy&verify=zzz') 的
+方式，将注册请求传递到论坛进行处理。其中 auth 用来将用户信息与资料以特定的格式，加密传递给论坛，forward 用于告知论坛 Passport API 完成
+自身操作后转向到的 URL 地址，verify 用于验证前面两个变量的有效性。auth、forward、verify 格式与结构将在后面进行说明</u>
+
+</ul>
+
+</ul>
+
+<br /><br /><li>Discuz! Passport API 在接收到由应用程序通过 header() 提交过来的请求后，进行如下操作：
+
+<ul>
+
+<br /><li>根据 verify 判断 auth 和 forward 变量是否合法，如合法则继续，否则终止
+
+<br /><br /><li>将 auth 根据既定算法解密，并还原成数组，数组的内容与格式将在后面进行说明。根据数组中的内容，检查此用户是否存在。如存在，则根据
+上述数组中的内容 UPDATE 论坛中相应的用户资料。如不存在，则使用数组中的信息 INSERT 到论坛用户资料表中
+
+<br /><br /><li>论坛设置 Cookie 或 Session，使得论坛自身处于登录状态
+
+<br /><br /><li>根据应用程序反馈的 forward 值，通过 header('Location: http://xxx') 的形式将页面跳转到 forward 变量指定的 URL
+
+</ul>
+
+<br /><br /><li>至此，注册流程结束
+
+<p><b>本部分中，加下划线显示的部分，是需要对您的应用程序进行更改的部分，事实上，这部分更改会非常容易和方便。</b>
+
+</ul><br /></td></tr><tr><td class="title">Discuz! Passport 参数规格与加密方式</td></tr>
+<tr><td><br />
+
+<p class="subtitle">私有密匙(passport_key)
+<ul><p>由于一些关键参数采用了 GET 方式进行传递，即便两次 header 跳转并不会直接将链接显示在外面，但我们仍然对关键的参数进行了加密，私有
+密匙共有两个作用：其一是供下面提到的可逆加密算法（AzDGCrypt）进行数据的加解密。其二是生成不可逆验证字串（verify），以防止关键信息被
+伪造。
+
+<p>在启用 Discuz! Passort 后，您需要在应用程序和 Discuz! 后台配置两处私有密匙，这两处的内容必须完全相同，这样应用程序和论坛之间才能
+正常通信。私有密匙决定了加密算法的强度，因此密匙长度请不要小于 10 个字节，并包含字母、数字和符号，以保证系统的安全。
+
+</ul><p class="subtitle">加密算法
+<ul><p>Discuz! Passport 采用 Azerbaijan Development Group（AzDG）开发的可逆加密算法 AzDGCrypt 对用户资料进行加密。如提供正确的私有密匙，
+可通过本加密算法对数据进行加密及解密，因此只要保证私有密匙的保密性，即可确保数据传递过程中的安全。以下为 Discuz! Passport 中应用到
+的可逆加密算法，为了生成可以被 Discuz! Passport 正确解密的 auth 字串，需要将如下函数放置于应用程序中，并可在登录及注册时调用。
+
+<p>passport_encrypt()是加密函数，用法为 passport_encrypt($txt, $key)，其中 $txt 是待加密的字串，$key 是私有密匙。<br />
+passport_decrypt()是解密函数，用法为 passport_decrypt($txt, $key)，其中 $txt 是加密后的字串，$key 是私有密匙。
+
+<br /><br /><table width="80%" cellpadding="0" cellspacing="0" border="0" class="code">
+<tr><td><pre>
+
+	/**
+	* Passport 加密函数
+	*
+	* @param		string		等待加密的原字串
+	* @param		string		私有密匙(用于解密和加密)
+	*
+	* @return	string		原字串经过私有密匙加密后的结果
+	*/
+	function passport_encrypt($txt, $key) {
+
+		// 使用随机数发生器产生 0~32000 的值并 MD5()
+		srand((double)microtime() * 1000000);
+		$encrypt_key = md5(rand(0, 32000));
+
+		// 变量初始化
+		$ctr = 0;
+		$tmp = '';
+
+		// for 循环，$i 为从 0 开始，到小于 $txt 字串长度的整数
+		for($i = 0; $i < strlen($txt); $i++) {
+			// 如果 $ctr = $encrypt_key 的长度，则 $ctr 清零
+			$ctr = $ctr == strlen($encrypt_key) ? 0 : $ctr;
+			// $tmp 字串在末尾增加两位，其第一位内容为 $encrypt_key 的第 $ctr 位，
+			// 第二位内容为 $txt 的第 $i 位与 $encrypt_key 的 $ctr 位取异或。然后 $ctr = $ctr + 1
+			$tmp .= $encrypt_key[$ctr].($txt[$i] ^ $encrypt_key[$ctr++]);
+		}
+
+		// 返回结果，结果为 passport_key() 函数返回值的 base64 编码结果
+		return base64_encode(passport_key($tmp, $key));
+
+	}
+
+	/**
+	* Passport 解密函数
+	*
+	* @param		string		加密后的字串
+	* @param		string		私有密匙(用于解密和加密)
+	*
+	* @return	string		字串经过私有密匙解密后的结果
+	*/
+	function passport_decrypt($txt, $key) {
+
+		// $txt 的结果为加密后的字串经过 base64 解码，然后与私有密匙一起，
+		// 经过 passport_key() 函数处理后的返回值
+		$txt = passport_key(base64_decode($txt), $key);
+
+		// 变量初始化
+		$tmp = '';
+
+		// for 循环，$i 为从 0 开始，到小于 $txt 字串长度的整数
+		for ($i = 0; $i < strlen($txt); $i++) {
+			// $tmp 字串在末尾增加一位，其内容为 $txt 的第 $i 位，
+			// 与 $txt 的第 $i + 1 位取异或。然后 $i = $i + 1
+			$tmp .= $txt[$i] ^ $txt[++$i];
+		}
+
+		// 返回 $tmp 的值作为结果
+		return $tmp;
+
+	}
+
+	/**
+	* Passport 密匙处理函数
+	*
+	* @param		string		待加密或待解密的字串
+	* @param		string		私有密匙(用于解密和加密)
+	*
+	* @return	string		处理后的密匙
+	*/
+	function passport_key($txt, $encrypt_key) {
+
+		// 将 $encrypt_key 赋为 $encrypt_key 经 md5() 后的值
+		$encrypt_key = md5($encrypt_key);
+
+		// 变量初始化
+		$ctr = 0;
+		$tmp = '';
+
+		// for 循环，$i 为从 0 开始，到小于 $txt 字串长度的整数
+		for($i = 0; $i < strlen($txt); $i++) {
+			// 如果 $ctr = $encrypt_key 的长度，则 $ctr 清零
+			$ctr = $ctr == strlen($encrypt_key) ? 0 : $ctr;
+			// $tmp 字串在末尾增加一位，其内容为 $txt 的第 $i 位，
+			// 与 $encrypt_key 的第 $ctr + 1 位取异或。然后 $ctr = $ctr + 1
+			$tmp .= $txt[$i] ^ $encrypt_key[$ctr++];
+		}
+
+		// 返回 $tmp 的值作为结果
+		return $tmp;
+
+	}
+
+	/**
+	* Passport 信息(数组)编码函数
+	*
+	* @param		array		待编码的数组
+	*
+	* @return	string		数组经编码后的字串
+	*/
+	function passport_encode($array) {
+
+		// 数组变量初始化
+		$arrayenc = array();
+
+		// 遍历数组 $array，其中 $key 为当前元素的下标，$val 为其对应的值
+		foreach($array as $key => $val) {
+			// $arrayenc 数组增加一个元素，其内容为 "$key=经过 urlencode() 后的 $val 值"
+			$arrayenc[] = $key.'='.urlencode($val);
+		}
+
+		// 返回以 "&" 连接的 $arrayenc 的值(implode)，例如 $arrayenc = array('aa', 'bb', 'cc', 'dd')，
+		// 则 implode('&', $arrayenc) 后的结果为 ”aa&bb&cc&dd"
+		return implode('&', $arrayenc);
+
+	}
+</pre></td></tr></table>
+
+<p>passport_encode()是将数组转换合成为字串形式存储的函数：变量名和数值之间用等号连接，如果数值包含特殊字符，使用 urlencode() 将其转码。
+多个变量间使用 & 分割。例如原始数组内容为 array('username' => 'abc', 'email' => 'my+discuz@gmail.com')，经过 passport_encode() 编码后
+结果为 username=abc&email=my%2Bdiscuz%40gmail.com。
+
+</ul><p class="subtitle">信息字串(auth)
+<ul><p>应用程序在收到登录或注册请求，并读取到用户资料后，请按如下的要求将用户资料及部分其他信息存放于一个数组之中。数组各键值的含义为：
+
+<ul><br /><li>cookietime
+<br />应用程序保存该用户登录记录的时间，可为非负整数，单位秒，Discuz! Passport 收到此参数后，会设置同样的 Cookie 过期时间，这样应用
+程序和论坛可以保证同样的登录有效性。如不传递此参数，或参数数值不正确，则 Discuz! Passport 按照 0 设置 Cookie 有效期。
+
+<br /><br /><li><b><u>time</b></u>
+<br />应用程序所在服务器当前时间（9 或 10 位数字 Unix Timestamp），此参数用于 Discuz! 所在服务器当前时间进行比对，如果早于当前时间
+超过若干秒（取决于 Discuz! Passport 中的“验证字串有效期”设定），则视为本 auth 内容无效，避免此URL被人得知后可能的安全问题。
+
+<br /><br /><li><b><u>username</b></u>
+<br />用户登录或注册的用户名。Discuz! 的注册用户名规则为：
+<ul>
+<li>长度 1~15 个字符，不得为空
+<li>不得为 c:\con\con、游客(gb2312 或 big5 内码)、Guest
+<li>不得包含 (,)、(*)、(")、([TAB])、([SPACE])、([\r])、([\n])、(<)、(>)、(&)其中之一
+</ul>
+<br />如果应用程序提交过来的用户名不符合上述规则，Passport 将自动去处其中的特殊字符，将过滤后的结果写入数据库中。
+
+<br /><br /><li><b><u>password</b></u>
+<br />用户密码经 MD5 不可逆加密后的值。如果此密码使用非 MD5 加密，则应用程序和 Passport 不能正常关联和使用。
+
+<br /><br /><li><b><u>email</b></u>
+<br />用户 Email 地址（50 个字节以内）。
+
+<br /><br /><li>isadmin
+<br />当前用户是否是应用程序的最高管理员，1=是，0=否。最高管理员的权限，将同步到论坛中去，其他下级管理员的身份将不进行同步，而由最高
+管理员分别在不同的系统中进行设置。
+
+<br /><br /><li>credits
+<br />当前用户在应用程序中的积分值，范围 -2147483648 到 2147483647，如果 Discuz! Passport 中设置了目标积分项，则用户登录时，Passport
+会把应用程序传递过来的 credits 值同步到指定的论坛的指定积分项目中
+
+<br /><br /><li>gender
+<br />当前用户的性别，1=男，2=女，0=未知。
+
+<br /><br /><li>bday
+<br />当前用户的生日，格式 yyyy-mm-dd。
+
+<br /><br /><li>regip
+<br />当前用户注册时的 IP 地址。
+
+<br /><br /><li>regdate
+<br />当前用户注册的时间（9 或 10 位数字 Unix Timestamp）。
+
+<br /><br /><li>nickname
+<br />当前用户的昵称（30 个字节以内，如传递此参数，必须打开相应用户组的昵称权限，否则用户在控制面板中提交个人资料时，会导致昵称失效）。
+
+<br /><br /><li>site
+<br />当前用户的主页地址（包含http://）。
+
+<br /><br /><li>qq
+<br />当前用户的 QQ 号码。
+
+<br /><br /><li>ICQ
+<br />当前用户的 ICQ 账号。
+
+<br /><br /><li>msn
+<br />当前用户的 MSN Messenger 账号。
+
+<br /><br /><li>yahoo
+<br />当前用户的 Yahoo! Messanger 账号。
+
+</ul><p><b>以上参数中，以黑体下划线显示的 time、username、password、email 是必须传递的参数，缺少上述参数 Passport 将无法正常工作。其他的参数是可选的，如果
+不传递某些参数，则 Passport 会进行识别，自动不更新没有传递的参数所在的字段。所有数值，请提供原始值，而非经过反斜线转义（addslashes）后
+的结果。</b>
+
+
+<p>把上述信息存放于数组中，假定为如下的形式：
+
+<br /><br /><table width="80%" cellpadding="0" cellspacing="0" border="0" class="code">
+<tr><td><pre>
+
+	$member = array
+		(
+		'cookietime'	=> 31536000,
+		'time'		=> 1117415922,
+		'username'	=> 'Abcd',
+		'password'	=> 'e2fc714c4727ee9395f324cd2e7f331f',
+		'email'		=> 'abcd@efgh.com',
+		'credits'	=> 123,
+		'regip'		=> '210.120.222.111',
+		'regdate'	=> '1012752000',
+		'msn'		=> 'email@hotmail.com'
+		);
+</pre></td></tr></table>
+
+<p>将其经过如下的加密变换，即可得到 auth 的值：
+
+<br /><br /><table width="80%" cellpadding="0" cellspacing="0" border="0" class="code">
+<tr><td><pre>
+
+	$auth = passport_encrypt(passport_encode($member), $passport_key);
+</pre></td></tr></table>
+
+<p>其中，passport_encode() 在前文已做了说明，用于将数组内容存放于特定的格式，$passport_key 是私有密匙。
+
+<p><b>切记：由于 $auth 中可能含有等号、加号等特殊字符，请将 $auth 经过 rawurlencode() 编码后再在 URL 中传递，否则可能会产生问题。</b>
+
+</ul><p class="subtitle">导向字串(forward)
+<ul><p>导向字串用于通知 Discuz! Passport 在完成自身操作后，返回到哪一个 URL 地址，例如 http://www.myforums.com/forumdisplay.php?fid=2。
+如果 forward 为空，则默认导向到应用程序的首页
+
+<p><b>切记：由于 $forward 中可能含有冒号、问号、等号等特殊字符，请将 $forward 经过 rawurlencode() 编码后再在 URL 中传递，否则可能会
+产生问题。</b>
+
+</ul><p class="subtitle">验证字串(verify)
+<ul><p>验证字串用户检验 auth 和 forward 两个参数的合法性，避免非法构造参数进行破坏的可能。无论 auth 和 forward 变量是否存在，验证字串
+（verify）的值均为：
+
+<br /><br /><table width="80%" cellpadding="0" cellspacing="0" border="0" class="code">
+<tr><td><pre>
+
+	$verify = md5($action.$auth.$forward.$passport_key);
+</pre></td></tr></table>
+
+<p>其中，$action 是当前执行的 Passport 操作，如 login 等等；$auth 是用户信息加密后，并经 rawurlencode() 之前的内容。$forward 是经
+rawurlencode() 前的导向字串、$passport_key 是私有密匙。如果 verify 的值不匹配，则 Passport 拒绝进行下一步操作。
+
+</ul><br /></td></tr><tr><td class="title">Discuz! Passport 设置与启用</td></tr>
+<tr><td><br />
+
+<p class="subtitle">内置关联
+<ul><p>Discuz! 以战略合作的方式，与业内知名的产品实现了 Passport 关联，目前内置了 SiteEngine 建站引擎（http://www.siteengine.net）和
+Shopex 通用型网上商店系统（http://www.shopex.cn）的相关接口，这样用户只须透过在两套软件中简单的设置，即可开启这些关联。
+
+</ul><p class="subtitle">其他应用程序
+<ul><p>由于 Discuz! Passport 的高可扩展性和平台无关性，使得您可以参照前文的说明，稍稍改动小部分的代码，便将任何 B/S 模式的应用程序与
+Discuz! 进行关联。
+
+</ul><p class="subtitle">参数设置
+<ul><p>您可以在 Discuz! 系统设置中，看到相应的通行证设置功能，在 Discuz! 合作伙伴的软件中，也可以找到这些设置入口。相关的操作已比较简单，
+在此不再详细叙述。
+
+</ul><p class="subtitle">特别说明
+<ul><p>如果您先运营了论坛，后与其他应用程序启用了 Passport 关联，由于之前论坛中的用户数据没有同步，您需要先写一个导入程序，将论坛的用户
+数据导入到应用程序的用户表中，否则以往在论坛注册的用户将无法通过 Passport 登录。已成功关联后新注册的用户无此问题。
+
+<p>在开启了 Discuz! 通行证后，您仍然可以通过 logging.php?action=login 这个链接来登录论坛，以备调试之用，但页面上显示的链接将改为应用程序
+的登录 URL。<b>注意：开启通行证后，建议您通过 Discuz! 选项关闭论坛本身的注册功能，以免用户通过论坛注册而产生无法同步的问题。</b>
+
+<p>您可以在 Discuz! 的 api/passport.php 找到 Discuz! Passport 的全部源程序，您也许通过他更好的理解 Passport 的原理，更快的完成应用程序与
+Discuz! 之间的整合。
+
+</ul><br /></td></tr><tr><td class="title">典型错误提示</td></tr>
+<tr><td><br />
+
+<p class="subtitle">Illegal request
+<ul><p>非法请求，当验证字串 verify 不匹配时会产生此提示。可能是应用程序与 Discuz! 配置的私有密匙不同，或是通过 URL 传递前，未将必要的参数
+（如 auth、forward 等）进行 URL 编码，也有可能是使用了经过 URL 编码的参数值用来计算 verify 的 md5 值造成。以 PHP 语言为例，正确的代码
+应当是类似于的如下的格式：
+
+<br /><br /><table width="80%" cellpadding="0" cellspacing="0" border="0" class="code">
+<tr><td><pre>
+
+	$action		= 'login';
+	$auth		= passport_encrypt(passport_encode($autharray), $passport_key);
+	$forward		= 'http://www.discuz.net/index.php';
+	$verify		= md5($action.$auth.$forward.$passport_key);
+
+	header("Location: http://www.discuz.net/api/passport.php".
+		"?action=$action".
+		"&auth=".rawurlencode($auth).
+		"&forward=".rawurlencode($forward).
+		"&verify=$verify");
+</pre></td></tr></table>
+
+</ul><p class="subtitle">Lack of required parameters
+<ul><p>auth 内容解密后，缺少必要的信息 time、username、password、email。
+
+</ul><p class="subtitle">Request expired
+<ul><p>请求过期。当前服务器时间与应用程序提交过来的 time 之差大于 Discuz! Passport 中设置的请求有效期。可能是使用以往的代码非法尝试，也可能是
+由于应用程序和 Discuz! 论坛所在的两台服务器，时间设置有误造成。
+
+</ul><p class="subtitle">Invalid action
+<ul><p>没有指定 Passport 所执行的 action。
+
+</ul></td></tr></table>
+
+<script language="JavaScript" src="footer.js"></script>
+</body>
+</html>

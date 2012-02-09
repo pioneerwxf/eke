@@ -1,0 +1,211 @@
+<? $current='m';?>
+<? include("header.php");?>
+<? include("top.php");?>
+<? include("nav.php"); ?>
+
+<div id="left">
+
+<? 
+	if(isset($discuz_uid) and $discuz_uid )
+	{
+		$array=select("shop","userid=$discuz_uid");
+		$user=select("eke_members","uid=$discuz_uid");
+		$shopid=$array['shopid'];//提取当前用户的书店id
+	}
+	$tag=$_GET["tag"];
+?>
+<? if($tag==1) {?>
+<? //预定图书的显示?>
+<div class="left_box">
+<h3><a name="mybooks" id="mybooks"></a>我的所有藏书</h3>
+<div class="notes">说明：红色书皮为已经被预定的书籍，请及时处理。</div>
+</div>
+  <table width="100%">
+ <tr>
+      <td colspan="2" bgcolor="#FFFF66">&nbsp;
+        <div class="notes">郑重说明：为了不产生误导信息，请及时将已经成交的被预定书籍状态修改为“已售”，否者系统会在书籍被预定后一个月自动转为“已售”状态。作为店长，这是您的权利也是您的责任，谢谢您的配合。</div></td>
+      </tr>
+    <tr>
+      <td colspan="2"><?
+$query=query("book","tag>0 and shopid='$shopid' ORDER BY tag DESC,bookid DESC");
+$book = mysql_fetch_array($query);
+$rsnum=mysql_num_rows($query);
+if ($rsnum==0){
+echo "该书店暂时没有藏书";
+//exit;
+}
+else{//分页设置
+	$i=0;
+	$path=$_SERVER["PHP_SELF"]; 
+	$page=$_GET["page"];
+	if($page=="") $page=1;
+	$pagesize=18; //每页显示的条数
+	$pagecount=ceil($rsnum/$pagesize);
+	if($page>$pagecount) $page=$pagecount;
+	mysql_data_seek($query,($page-1)*$pagesize);
+}
+?>
+          <? 
+			while(($book = mysql_fetch_array($query))&&$i<$pagesize){
+			?>
+	<div class="book_frame_large" >
+	<?
+			if($book["tag"]==2)
+			{ $status='预定';
+			?>
+          <div class="order_book_frame">
+		  <? }else { 
+		  $status='待售'; ?>
+		  <div class="book_frame" >
+            <? }?>
+			<? include("book_frame.php");?>
+	      </div>
+		  <div class="book_note" >
+		    <form id="form2" method="post" action="edit_book.php?act=tag&id=<?=$book["bookid"]?>">
+		      <table width="100%" border="0" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td><select name="tag" id="tag">
+                    <option value="1">待售</option>
+                    <option value="2">预定</option>
+                    <option value="0">已售</option>
+					<option value="<?=$book["tag"]?>" selected="selected"><?=$status?></option>
+                  </select></td>
+                  <td style="padding-top:5px;">
+                    <input type="image" src="../images/go.gif" name="Submit3" value="更改" />                  </td>
+                </tr>
+              </table>
+              </form>
+		    <a href="edit_book.php?act=dele&id=<?=$book["bookid"]?>" onclick="{if(confirm('确定要删除该书？')){return true;}return false;}">删除</a>| <a href="edit_book.php?act=edit&id=<?=$book["bookid"]?>">编辑</a>|<a href="edit_book.php?act=edit&id=<?=$book["bookid"]?>#reserved"> 查看</a> </div>
+		  </div>
+		  <? $i++;
+		} ?>      </td>
+    </tr>
+    <tr>
+      <td width="47%"><? if($rsnum){?><!--分页结束-->
+          <a href="<? echo $path;?>?page=1&tag=1">首页</a>
+          <? if($page!=1) echo "<a href=".$path."?page=".($page-1)."&tag=1".">上一页</a>";
+    else echo "上一页";?>
+          <? if($page!=$pagecount) echo "<a href=".$path."?page=".($page+1)."&tag=1".">下一页</a>";else echo "下一页";    ?>
+        <a href="<? echo $path;?>?page=<? echo $pagecount?>&tag=1">末页</a></td>
+      <td width="53%"><!--分页结束-->
+当前第
+  <?=$page?>
+页/共
+<?=$pagecount?>
+页，
+<?=$rsnum?>
+本藏书
+<? }?></td>
+    </tr>
+  </table>
+  <p>&nbsp;</p>
+<? } 
+else if($tag==0){?>
+<? //已售图书的显示?>
+  <div class="left_box">
+    <h3><a name="mybooks" id="mybooks"></a>我的已售图书</h3></div>
+  <table width="100%" border="0">
+    <tr>
+      <td colspan="3"><?
+$query=query("book","tag=0 and shopid='$shopid' ORDER BY date DESC,level DESC");
+$book = mysql_fetch_array($query);
+$rsnum=mysql_num_rows($query);
+if ($rsnum==0){
+echo "暂时还没有已售图书，加油宣传啊";
+//exit;
+}
+else{//分页设置
+	$i=0;
+	$path=$_SERVER["PHP_SELF"]; 
+	$page=$_GET["page"];
+	if($page=="") $page=1;
+	$pagesize=18; //每页显示的条数
+	$pagecount=ceil($rsnum/$pagesize);
+	if($page>$pagecount) $page=$pagecount;
+	mysql_data_seek($query,($page-1)*$pagesize);
+}
+?>
+          <? 
+			while(($book = mysql_fetch_array($query))&&$i<$pagesize){
+			?>
+	<div class="book_frame_large" >
+          <div class="sold_book_frame">
+           <div class="book_author" >
+              <?=$book["author"]?>
+              著 </div>
+		    <div class="book_text" > <a href="reserve.php?bookid=<?=$book["bookid"]?>"> <img style="float:right; margin-bottom:20px;" src="../images/head_06.gif" alt="点击预定，放入我的购物框" width="16" height="11" /></a> </div>
+		    <div class="book_title"><a class="info" href="reserve.php?bookid=<?=$book["bookid"]?>" title="" target="subheaderFrame">
+		      <?=$book["title"]?>
+              <span class="infobox">
+              <table width="100%" border="0">
+                <tr>
+                  <td colspan="2">书名：
+                      <?=$book["title"]?></td>
+                </tr>
+                <tr>
+                  <td colspan="2">出版社：
+                      <?=$book["public"]?></td>
+                </tr>
+                <tr>
+                  <td width="65%" >作者：
+                      <?=$book["author"]?></td>
+                 <td width="35%" rowspan="2" ><div align="left"><strong class="highlight">
+                 ：已售：                 </strong></div></td>
+                </tr>
+                <tr>
+                  <td>新旧程度：
+                      <?=$book["old_degree"]?></td>
+                </tr>
+              </table>
+              </span> </a> </div>
+		    <div class="book_price" >
+              <div class="before">
+                <?=$book["price0"]?>
+                元</div>
+		      <div class="now">
+		        <?=$book["price1"]?>
+		        元</div>
+	        </div>
+          </div>
+		  <div class="book_note" >
+		    <form id="form2" method="post" action="edit_book.php?act=tag&amp;id=<?=$book["bookid"]?>">
+              <table width="100%" border="0" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td><select name="tag" id="tag">
+                      <option value="1">待售</option>
+                      <option value="2">预定</option>
+                      <option value="0" selected="selected">已售</option>
+                  </select></td>
+                  <td style="padding-top:5px;"><input type="image" src="../images/go.gif" name="Submit32" value="更改" />                  </td>
+                </tr>
+              </table>
+		      </form>
+		  </div>
+			</div>
+        <? $i++;
+		} ?>      </td>
+    </tr>
+    <tr>
+      <td colspan="2"><? if($rsnum){?><!--分页结束-->
+          <a href="<? echo $path;?>?page=1&tag=0">首页</a>
+          <? if($page!=1) echo "<a href=".$path."?page=".($page-1)."&tag=0".">上一页</a>";
+    else echo "上一页";?>
+          <? if($page!=$pagecount) echo "<a href=".$path."?page=".($page+1)."&tag=0".">下一页</a>";else echo "下一页";    ?>
+          <a href="<? echo $path;?>?page=<? echo $pagecount?>&tag=0">末页</a>
+        <!--分页结束--></td>
+      <td> 当前第
+        <?=$page?>
+        页/共
+        <?=$pagecount?>
+页，
+共
+<?=$rsnum?>
+本藏书
+<? }?></td>
+    </tr>
+  </table>
+  <p>&nbsp;</p>
+<? }?>
+</div>
+	<? include("right-bar.php");?>
+	<? include("footer.php");?>		
