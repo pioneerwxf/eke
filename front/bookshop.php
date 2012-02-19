@@ -10,7 +10,7 @@
 <span class="float_right"><a href="bookshop.php?level=2">更多more>></a></span>
 <div class="notes">藏书量在100本以上</div></div>
 <? 
-$query_1=query("shop","level>0 and booknum>100 ORDER BY booknum DESC,date DESC limit 3");
+$query_1=query("shop","level>0 and booknum>100 ORDER BY rand() DESC,date DESC limit 3");
 $shop_1 = mysql_fetch_array($query_1);
 ?>
 <table width="100%" border="0">
@@ -63,7 +63,7 @@ $shop_1 = mysql_fetch_array($query_1);
 <span class="float_right"><a href="bookshop.php?level=1">更多more>></a></span>
 <div class="notes">藏书量在30~100本</div></div>
 <? 
-$query_2=query("shop","level>0 and booknum>30 and booknum<=100 ORDER BY booknum DESC,date DESC limit 3");
+$query_2=query("shop","level>0 and booknum>30 and booknum<=100 ORDER BY rand() DESC,date DESC limit 3");
 $shop_2 = mysql_fetch_array($query_2);
 ?>
 <table width="100%" border="0">
@@ -115,7 +115,7 @@ $shop_2 = mysql_fetch_array($query_2);
 <span class="float_right"><a href="bookshop.php?level=0">更多more>></a></span>
 <div class="notes">新店开张，均属此类</div></div>
 <? 
-$query_3=query("shop","level>0 and booknum>=0 and booknum<=30 ORDER BY booknum DESC,date DESC limit 6");
+$query_3=query("shop","booknum>0 and booknum<=30 ORDER BY rand() DESC limit 6");
 $shop_3 = mysql_fetch_array($query_3);
 ?>
 <table width="100%" border="0">
@@ -174,7 +174,7 @@ $shop_3 = mysql_fetch_array($query_3);
   <div class="notes">藏书量在100本以上</div>
 </div>
 <? 
-$query=query("shop","level>0 and booknum>100 ORDER BY booknum DESC,date DESC");
+$query=query("shop","level>0 and booknum>100 ORDER BY rand() DESC,date DESC");
 $shop = mysql_fetch_array($query);
 $rsnum=mysql_num_rows($query);
 ?>
@@ -240,7 +240,7 @@ if($rsnum){
   <div class="notes">藏书量在30~100本</div>
 </div>
 <? 
-$query=query("shop","level>0 and booknum>30 and booknum<=100 ORDER BY booknum DESC,date DESC");
+$query=query("shop","level>0 and booknum>30 and booknum<=100 ORDER BY rand() DESC,date DESC");
 $shop= mysql_fetch_array($query);
 $rsnum=mysql_num_rows($query);
 ?>
@@ -304,7 +304,7 @@ if($rsnum){
   <div class="notes">新店开张，均属此类</div>
 </div>
 <? 
-$query=query("shop","level>0 and booknum>=0 and booknum<=30 ORDER BY booknum DESC,date DESC");
+$query=query("shop","booknum>0 and booknum<=30 ORDER BY rand()");
 $shop = mysql_fetch_array($query);
 $rsnum=mysql_num_rows($query);
 ?>

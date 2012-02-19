@@ -77,7 +77,7 @@
 			<? } else if($current=='b'){?>
 			<div class="top-thirds">
 				<? 
-			$query=query("shop","level>0 and booknum>0 order by level DESC limit 5");
+			$query=query("shop","level>0 and booknum>0 order by rand() limit 5");
 			$array = mysql_fetch_array($query);
 			for($i=1;$array and $i<=5;$i++){
 				$shop[$i]=$array;

@@ -184,7 +184,7 @@ echo "该书店暂时没有藏书";
 }
 ?>
           <? 
-			$query=query("book","tag>0 and tag<3 and shopid='$shopid' ORDER BY tag DESC,bookid DESC limit 6");
+			$query=query("book","tag>0 and tag<3 and shopid='$shopid' ORDER BY tag DESC,bookid DESC limit 30");
 			$book = mysql_fetch_array($query);
 			while($book){
 			?>
@@ -250,7 +250,7 @@ echo "该书店暂时没有藏书";
 }
 ?>
           <? 
-			$query=query("book","tag=3 and shopid='$shopid' ORDER BY date DESC limit 6");
+			$query=query("book","tag=3 and shopid='$shopid' ORDER BY date DESC limit 30");
 			$book = mysql_fetch_array($query);
 			while($book){
 			?>
