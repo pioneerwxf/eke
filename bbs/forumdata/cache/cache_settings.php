@@ -1,7 +1,7 @@
 <?php
 //Discuz! cache file, DO NOT modify me!
-//Created: Feb 21, 2011, 10:52
-//Identify: ce15ba35b6649a61d3eb3507bea0c5be
+//Created: Feb 28, 2012, 15:47
+//Identify: aec30460680453489de31744fcd526a5
 
 $_DCACHE['settings'] = array (
   'accessemail' => '',
@@ -350,7 +350,7 @@ $_DCACHE['settings'] = array (
   'totalmembers' => 1740,
   'lastmember' => 'Astray',
   'cachethreadon' => 0,
-  'cronnextrun' => '1298304000',
+  'cronnextrun' => '1298323800',
   'jsmenu' => 
   array (
     1 => true,
